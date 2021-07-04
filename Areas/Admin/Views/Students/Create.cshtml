@@ -1,0 +1,197 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+
+        <div class="widget-box">
+            <div class="widget-header widget-header-blue widget-header-flat">
+                <h4 class="widget-title lighter">New Item Wizard</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div id="fuelux-wizard-container">
+
+                        <div class="step-content pos-rel">
+                            <h3 class="lighter block green">Enter the following information</h3>
+
+                            <form class="form-horizontal" id="validation-form" method="get">
+
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">First Name:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="text" id="FirstName" name="FirstName" class="col-xs-12 col-sm-5" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">Last Name:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="text" id="LastName" name="LastName" class="col-xs-12 col-sm-5" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">Name:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="text" id="Name" name="Name" class="col-xs-12 col-sm-8" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">Email Address:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="email" name="email" id="email" class="col-xs-12 col-sm-6" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="ace-icon fa fa-phone"></i>
+                                            </span>
+
+                                            <input type="tel" id="phone" name="phone" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+
+
+                                <div class="hr hr-dotted"></div>
+
+
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right">Gender</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div>
+                                            <label class="line-height-1 blue">
+                                                <input name="gender" value="1" type="radio" class="ace" />
+                                                <span class="lbl"> Male</span>
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <label class="line-height-1 blue">
+                                                <input name="gender" value="2" type="radio" class="ace" />
+                                                <span class="lbl"> Female</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Year of study</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <select id="YearOfStudy" name="YearOfStudy" class="select2" data-placeholder="Click to Choose...">
+                                            <option value="">&nbsp;</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Faculty</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <select id="Faculty" name="Faculty" class="select2" data-placeholder="Click to Choose...">
+                                            <option value="">&nbsp;</option>
+                                            <option value="FIST">Faculty of Information Science & Tech</option>
+                                            <option value="COMMERCE">Faculty of commerce</option>
+                                            <option value="LAW">Faculty of Law</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="space-2"></div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">Password:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="password" name="password" id="password" class="col-xs-12 col-sm-4" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2">Confirm Password:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="password" name="password2" id="password2" class="col-xs-12 col-sm-4" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="space-8"></div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="wizard-actions center">
+                        <button class="btn btn-success btn-next" id="SaveStudent">
+                            Save
+                            <i class="ace-icon fa fa-floppy-o  icon-on-right"></i>
+                        </button>
+                    </div>
+                </div><!-- /.widget-main -->
+            </div><!-- /.widget-body -->
+        </div>
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

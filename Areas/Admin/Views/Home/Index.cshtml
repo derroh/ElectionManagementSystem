@@ -1,0 +1,56 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
+}
+
+<div class="alert alert-block alert-success">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="ace-icon fa fa-times"></i>
+    </button>
+
+    <i class="ace-icon fa fa-check green"></i>
+
+    Welcome to Bettie's Voting System Application
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card-counter primary">
+                <i class="fa fa-code-fork"></i>
+                <span class="count-numbers">@Model.Positions</span>
+                <span class="count-name">Positions</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-counter danger">
+                <i class="fa fa-ticket"></i>
+                <span class="count-numbers">@Model.Candidates</span>
+                <span class="count-name">Candidates</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-counter success">
+                <i class="fa fa-database"></i>
+                <span class="count-numbers">@Model.RegisteredVoters</span>
+                <span class="count-name">Registered Voters</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-counter info">
+                <i class="fa fa-users"></i>
+                <span class="count-numbers">@Model.VotesCast</span>
+                <span class="count-name">Votes Cast</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

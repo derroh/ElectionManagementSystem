@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ElectionManagementSystem.Student>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="simple-table" class="table  table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="center">
+                                Student Id
+                            </th>
+                            <th>Student Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Year of Study</th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var student in Model)
+                        {
+                            <tr>
+                                <td class="center">
+                                    @student.StudentId
+                                </td>
+
+                                <td>
+                                    @student.Name
+                                </td>
+
+                                <td>
+                                    @student.Phone
+                                </td>
+                                <td class="center">@student.Email</td>
+                                <td class="hidden-480">@student.YearOfStudy</td>
+
+
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <a class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                        </a>
+
+                                        <a href="@Url.Action("Edit", "Students", new { id = student.StudentId })" class="btn btn-xs btn-success tooltip-success" data-rel="tooltip" title="Edit">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </a>
+
+                                        <a class="btn btn-xs btn-danger tooltip-error delete" data-rel="tooltip" title="Delete">
+                                            <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="@Url.Action("Edit", "Students", new { id = student.StudentId })" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-error delete" data-rel="tooltip" title="Delete">
+                                                        <span class="red">
+                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div><!-- /.span -->
+        </div><!-- /.row -->
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

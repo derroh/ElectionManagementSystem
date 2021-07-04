@@ -1,0 +1,109 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "CastVote";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+
+        <div class="widget-box">
+            <div class="widget-header widget-header-blue widget-header-flat">
+                <h4 class="widget-title lighter">New Item Wizard</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div id="fuelux-wizard-container">
+                        <div>
+                            <ul class="steps">
+                                @foreach(ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
+                                {
+                                    
+                                    <li data-step="@position.PositionId" class="active">
+                                        <span class="step">@position.PositionId</span>
+                                        <span class="title">@position.PositionName</span>
+                                    </li>
+                                }
+                                
+
+                                <li data-step="@Model.VoterTabs">
+                                    <span class="step">@Model.VoterTabs</span>
+                                    <span class="title">Other Info</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <hr />
+
+                        <div class="step-content pos-rel">
+                            <form class="form-horizontal" id="ballot-form" method="get">
+                                @foreach (ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
+                                {
+                                <div class="step-pane active" data-step="@position.PositionId">
+
+                                    <div class="center">
+                                        <h3 class="blue lighter">Choose a contestant from the options below</h3>
+                                    </div>
+
+                                    <hr />
+
+                                    @foreach (ElectionManagementSystem.Models.Candidates candidate in position.Candidates)
+                                    {
+
+
+                                        if (position.PositionId == candidate.ElectralPositionId)
+                                        {
+                                            <div class="space-2"></div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
+
+                                                <div class="col-xs-12 col-sm-9">
+
+                                                    <div>
+                                                        <label class="line-height-1 blue">
+                                                            <input name="@position.PositionId" value="@candidate.CandidateID" type="radio" class="" />
+                                                            <span class="lbl"> @candidate.CandidateName</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="hr hr-dotted"></div>
+                                        }
+
+                                    }
+
+                                </div>
+                                }
+                                <div class="step-pane" data-step="@Model.VoterTabs">
+                                    <div class="center">
+                                        <h3 class="green">Congrats!</h3>
+                                        Thank you for casting your vote! Click finish to continue!
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="wizard-actions">
+                        <button class="btn btn-prev">
+                            <i class="ace-icon fa fa-arrow-left"></i>
+                            Prev
+                        </button>
+
+                        <button class="btn btn-success btn-next" data-last="Finish">
+                            Next
+                            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                        </button>
+                    </div>
+                </div><!-- /.widget-main -->
+            </div><!-- /.widget-body -->
+        </div>
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
