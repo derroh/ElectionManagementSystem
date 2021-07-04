@@ -22,5 +22,8 @@ namespace ElectionManagementSystem
         public string GmailSenderName { get; set; }
         public Nullable<int> SMTPPort { get; set; }
         public string SMTPHost { get; set; }
+        public string PositionsSeriesCode { get; set; }
+        public string CandidatesSeriesCode { get; set; }
+        public string ElectionsSeriesCode { get; set; }
     }
 }

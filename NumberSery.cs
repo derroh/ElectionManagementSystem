@@ -12,13 +12,12 @@ namespace ElectionManagementSystem
     using System;
     using System.Collections.Generic;
     
-    public partial class Ballot
+    public partial class NumberSery
     {
-        public int BallotId { get; set; }
-        public string StudentId { get; set; }
-        public string ElectionId { get; set; }
-        public string PositionId { get; set; }
-        public string CandidateId { get; set; }
-        public Nullable<int> Vote { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public string StartingNumber { get; set; }
+        public string EndingNumber { get; set; }
+        public string LastUsedNumber { get; set; }
     }
 }

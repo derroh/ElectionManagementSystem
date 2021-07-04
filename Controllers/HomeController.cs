@@ -33,7 +33,7 @@ namespace ElectionManagementSystem.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(User _user)
+        public ActionResult Login(Models.UserLogin _user)
         {
             string msg = "";
 
@@ -61,7 +61,9 @@ namespace ElectionManagementSystem.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = ModelState.Values.ToString();
+                    string x = null;
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    x = errors.ToString();
                 }
             }
             catch(Exception es)
@@ -76,11 +78,11 @@ namespace ElectionManagementSystem.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User _user)
+        public ActionResult Register(Models.RegisterUser _user)
         {
             if (ModelState.IsValid)
             {               
-                var student = new Student { Email = _user.Email, Phone = _user.Phone, FirstName = _user.FirstName, LastName = _user.LastName, StudentId = _user.StudentId };             
+                var student = new Student { Email = _user.Email, Phone = _user.Phone, FirstName = _user.FirstName, LastName = _user.LastName, Name = _user.FirstName +" "+_user.LastName, StudentId = _user.StudentId };             
 
                 using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
                 {
@@ -91,7 +93,7 @@ namespace ElectionManagementSystem.Controllers
                 var user = new User
                 {
                     Email = _user.Email,
-                    Password = _user.Password,
+                    Password = GetMD5(_user.Password),
                     FirstName = _user.FirstName,
                     LastName = _user.LastName,
                     Phone = _user.Phone,
@@ -102,12 +104,11 @@ namespace ElectionManagementSystem.Controllers
 
                 using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
                 {
-                    _user.Password = GetMD5(_user.Password);
                     dbEntities.Configuration.ValidateOnSaveEnabled = false;
                     dbEntities.Users.Add(user);
                     dbEntities.SaveChanges();
                 }
-                AppFunctions.SendTextMessage(_user.Phone, "Your account on Bettie's voting system has been created.");
+                AppFunctions.SendTextMessage(_user.Phone, " Dear "+ _user.FirstName + ", your account on Bettie's voting system has been created at " + DateTime.Now.ToShortTimeString());
 
                 ViewBag.Message = "Account Created successfully";
                 return RedirectToAction("Index");

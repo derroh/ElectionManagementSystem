@@ -14,18 +14,9 @@ namespace ElectionManagementSystem
     
     public partial class Election
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Election()
-        {
-            this.Ballots = new HashSet<Ballot>();
-        }
-    
         public string ElectionId { get; set; }
         public string Name { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ballot> Ballots { get; set; }
     }
 }

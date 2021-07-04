@@ -23,13 +23,26 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         }
         public ActionResult CreateElection(Election e)
         {
-            string msg = "";
+            string msg = "", DocumentNo = "";
 
             try
             {
+                var settings = _db.Settings.Where(s => s.Id == 1).SingleOrDefault();
+
+                string ElectionsCode = settings.ElectionsSeriesCode;
+
+                var NumberSeriesData = _db.NumberSeries.Where(s => s.Code == ElectionsCode).SingleOrDefault();
+
+                string LastUsedNumber = NumberSeriesData.LastUsedNumber;
+
+                if (LastUsedNumber != "")
+                {
+                    DocumentNo = AppFunctions.GetNewDocumentNumber(ElectionsCode.Trim(), LastUsedNumber.Trim());
+                }
+
                 var election = new Election
                 {
-                    ElectionId = "1",
+                    ElectionId = DocumentNo,
                     Name = e.Name,
                     StartDate = e.StartDate,
                     EndDate = e.EndDate
@@ -44,6 +57,9 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
                     msg = "Election Created successfully";
                 }
+
+                //update last used number
+                AppFunctions.UpdateNumberSeries(ElectionsCode, DocumentNo);
             }
             catch (Exception es)
             {
@@ -63,6 +79,28 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         public ActionResult Edit(string Id)
         {
             return View();
+        }
+        public JsonResult ListElections()
+        {
+            List<Election> electionlist = new List<Election>();
+
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var elections = dbEntities.Elections.ToList();
+
+                foreach (var election in elections)
+                {
+                    electionlist.Add(new ElectionManagementSystem.Election
+                    {
+                        Name = election.Name,
+                        ElectionId = election.ElectionId,
+                        EndDate = election.EndDate,
+                        StartDate = election.StartDate
+
+                    });
+                }
+            }
+            return Json(JsonConvert.SerializeObject(electionlist), JsonRequestBehavior.AllowGet);
         }
     }
 }

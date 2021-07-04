@@ -132,6 +132,35 @@ namespace ElectionManagementSystem
                 ex.Data.Clear();
             }
         }
+        public static string GetNewDocumentNumber(string NumberSeriesCode, string LastUsedNumber)
+        {
+            string RecordNumber = LastUsedNumber.Substring(NumberSeriesCode.Length);
+            int DecimalPlaces = RecordNumber.Length;
+            int LastAutoIncrementId = Convert.ToInt32(RecordNumber);
+
+            string FormatterPrefix = "";
+            string fmt = ".##";
+
+            char pad = '0';
+            FormatterPrefix = FormatterPrefix.PadLeft(DecimalPlaces, pad);
+            FormatterPrefix = FormatterPrefix + fmt;
+
+            int NextAutoIncrementId = LastAutoIncrementId + 1;
+            return NumberSeriesCode + NextAutoIncrementId.ToString(FormatterPrefix);
+        }
+        public static bool UpdateNumberSeries(string NumberSeriesCode, string LastUsedNumber)
+        {
+            bool status = false;
+
+            var check = _db.NumberSeries.FirstOrDefault(s => s.Code == NumberSeriesCode);
+            if (check != null)
+            {
+                check.LastUsedNumber = LastUsedNumber;
+                _db.SaveChanges();
+                status = true;
+            }
+            return status;
+        }
     }
     static class RegexFunctions
     {

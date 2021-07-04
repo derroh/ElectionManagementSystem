@@ -8,8 +8,29 @@ jQuery(function ($) {
 		});
 
 	//electral position
+	
 
+	$.ajax({
+		url: '/Admin/Elections/ListElections',
 
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (response) {
+			if (response != null) {
+
+				var data = $.parseJSON(response);
+
+				$.each(data, function (i, item) {
+					$("#ElectionId").append($('<option></option>').attr("value", item.ElectionId).text(item.Name));
+				});
+
+			}
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		}
+	});
 
 	$('#electralpositionform').validate({
 		errorElement: 'div',
@@ -19,12 +40,20 @@ jQuery(function ($) {
 		rules: {
 			name: {
 				required: true
-			}
+			},
+			ElectionId: {
+				required: true
+			},
+			Sequence: {
+				required: true
+            }
 		},
 
 		messages: {
 
-			name: "Please specify the electral position name"
+			name: "Please specify the electral position name",
+			ElectionId: "Please select the election",
+			Sequence: "Please select position on the voters window"
 		},
 
 
@@ -59,6 +88,11 @@ jQuery(function ($) {
 	});
 
 	$("#SaveElectralposition").click(function (event) {
+
+		//var formAction = $("#electralpositionform").attr('action');
+
+		//console.log(formAction);
+
 
 		if ($('#electralpositionform').valid())
 		{
@@ -101,6 +135,10 @@ jQuery(function ($) {
 	});
 
 	$("#UpdateElectralposition").click(function (event) {
+
+		var formAction = $("#electralpositionform").attr('action');
+
+		console.log(formAction);
 
 		if ($('#electralpositionform').valid()) {
 
@@ -156,12 +194,16 @@ jQuery(function ($) {
 			},
 			StudentId: {
 				required: true
+			},
+			ElectionId: {
+				required: true
 			}
 		},
 
 		messages: {			
 			StudentId: "Please choose student",
-			PositionId: "Please choose position"
+			PositionId: "Please choose position",
+			ElectionId: "Please choose the election"
 		},
 
 
@@ -238,99 +280,52 @@ jQuery(function ($) {
 
 	//separate pages
 
-	if (window.location.pathname === "/Admin/Candidates/Create") {
-		//list students
-		$.ajax({
-			url: './ListStudents',
-			type: "POST",
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			success: function (response) {
-				if (response != null) {
+	//list students
+	$.ajax({
+		url: '/Admin/Students/ListStudents',
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (response) {
+			if (response != null) {
 
-					var data = $.parseJSON(response);
+				var data = $.parseJSON(response);
 
-					$.each(data, function (i, item) {
-						$("#StudentId").append($('<option></option>').attr("value", item.StudentId).text(item.Name));
-					});
+				$.each(data, function (i, item) {
+					$("#StudentId").append($('<option></option>').attr("value", item.StudentId).text(item.Name));
+				});
 
-				}
-			},
-			error: function (e) {
-				console.log(e.responseText);
 			}
-		});
-		//list electral positions
-		$.ajax({
-			url: './ListPositions',
-			type: "POST",
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			success: function (response) {
-				if (response != null) {
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		}
+	});
+	//list electral positions
+	$.ajax({
+		url: '/Admin/Positions/ListPositions',
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (response) {
+			if (response != null) {
 
-					var data = $.parseJSON(response);
+				var data = $.parseJSON(response);
 
-					$.each(data, function (i, item) {
-						$("#PositionId").append($('<option></option>').attr("value", item.PositionId).text(item.Name));
-					});
+				$.each(data, function (i, item) {
+					$("#PositionId").append($('<option></option>').attr("value", item.PositionId).text(item.Name));
+				});
 
-				}
-			},
-			error: function (e) {
-				console.log(e.responseText);
 			}
-		});
-	} else {
-		//list students
-		$.ajax({
-			url: '../ListStudents',
-			type: "POST",
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			success: function (response) {
-				if (response != null) {
-
-					var data = $.parseJSON(response);
-
-					$.each(data, function (i, item) {
-						$("#StudentId").append($('<option></option>').attr("value", item.StudentId).text(item.Name));
-					});
-
-				}
-			},
-			error: function (e) {
-				console.log(e.responseText);
-			}
-		});
-		//list electral positions
-		$.ajax({
-			url: '../ListPositions',
-			type: "POST",
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			success: function (response) {
-				if (response != null) {
-
-					var data = $.parseJSON(response);
-
-					$.each(data, function (i, item) {
-						$("#PositionId").append($('<option></option>').attr("value", item.PositionId).text(item.Name));
-					});
-
-					
-
-				}
-			},
-			error: function (e) {
-				console.log(e.responseText);
-			}
-		});
-	}
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		}
+	});
 
 	/// Elections
 
-	if (!ace.vars['old_ie']) $('#StartDateTime, #EndDateTime').datetimepicker({
+	if (!ace.vars['old_ie']) $('#StartDate, #EndDate').datetimepicker({
 		//format: 'MM/DD/YYYY h:mm:ss A',//use this option to display seconds
 		icons: {
 			time: 'fa fa-clock-o',
@@ -357,10 +352,10 @@ jQuery(function ($) {
 			name: {
 				required: true
 			},
-			StartDateTime: {
+			StartDate: {
 				required: true
 			},
-			EndDateTime: {
+			EndDate: {
 				required: true
 			}
 		},
@@ -368,8 +363,8 @@ jQuery(function ($) {
 		messages: {
 
 			name: "Please specify the electral position name",
-			StartDateTime: "Please specify the election start date and time",
-			EndDateTime: "Please specify the election end date and time"
+			StartDate: "Please specify the election start date and time",
+			EndDate: "Please specify the election end date and time"
 		},
 
 
@@ -407,7 +402,7 @@ jQuery(function ($) {
 
 		if ($('#electionform').valid()) {
 			//Serialize the form datas.  
-			var valdata = $("#electralcandidateform").serialize();
+			var valdata = $("#electionform").serialize();
 			//to get alert popup  	
 
 			jQuery.ajax({
@@ -603,7 +598,7 @@ jQuery(function ($) {
 
 			var valdata = $("#ballot-form").serializeArray();
 			//to get alert popup  	
-			console.log(valdata);
+			
 			jQuery.ajax({
 				url: '../CastBallot',
 				type: "POST",

@@ -32,5 +32,6 @@ namespace ElectionManagementSystem
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<NumberSery> NumberSeries { get; set; }
     }
 }

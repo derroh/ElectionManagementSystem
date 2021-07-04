@@ -25,13 +25,31 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         public ActionResult CreatePosition(ElectionPosition ep)
         {
             string msg = "";
+            string DocumentNo = null;
 
             try
             {
-                var pos = new ElectionPosition
+                //Get No Series here
+
+                var settings = _db.Settings.Where(s => s.Id == 1).SingleOrDefault();
+
+                string PositionsCode = settings.PositionsSeriesCode;
+
+                var NumberSeriesData = _db.NumberSeries.Where(s => s.Code == PositionsCode).SingleOrDefault();
+
+                string LastUsedNumber = NumberSeriesData.LastUsedNumber;
+
+                if (LastUsedNumber != "")
                 {
+                    DocumentNo = AppFunctions.GetNewDocumentNumber(PositionsCode.Trim(), LastUsedNumber.Trim());
+                }
+
+                var pos = new ElectionPosition
+                {                    
+                    PositionId = DocumentNo,
                     Name = ep.Name,
-                    PositionId = "5" // Make this dynamic
+                    Sequence = ep.Sequence,
+                    ElectionId = DocumentNo= ep.ElectionId
                 };
 
                 using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
@@ -42,6 +60,9 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
                     msg = "Position Created successfully";
                 }
+
+                //update last used number
+                AppFunctions.UpdateNumberSeries(PositionsCode, DocumentNo);
             }
             catch(Exception es)
             {
@@ -114,6 +135,27 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
+      
+
+        public JsonResult ListPositions()
+        {
+            List<ElectionPosition> positionlist = new List<ElectionPosition>();
+
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var positions = dbEntities.ElectionPositions.ToList();
+
+                foreach (var position in positions)
+                {
+                    positionlist.Add(new ElectionPosition
+                    {
+                        Name = position.Name,
+                        PositionId = position.PositionId
+                    });
+                }
+            }
+            return Json(JsonConvert.SerializeObject(positionlist), JsonRequestBehavior.AllowGet);
         }
     }
 }

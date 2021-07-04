@@ -49,16 +49,30 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         }
         public ActionResult CreateCandidate(ElectionCandidate ec)
         {
-            string msg = "";
+            string msg = "", DocumentNo = "";
 
             try
             {
+                var settings = _db.Settings.Where(s => s.Id == 1).SingleOrDefault();
+
+                string CandidatesCode = settings.CandidatesSeriesCode;
+
+                var NumberSeriesData = _db.NumberSeries.Where(s => s.Code == CandidatesCode).SingleOrDefault();
+
+                string LastUsedNumber = NumberSeriesData.LastUsedNumber;
+
+                if (LastUsedNumber != "")
+                {
+                    DocumentNo = AppFunctions.GetNewDocumentNumber(CandidatesCode.Trim(), LastUsedNumber.Trim());
+                }
+
                 var candidate = new ElectionCandidate
                 {
                     PositionId = ec.PositionId,
                     StudentId = ec.StudentId,
-                    CandidateId = "4"
-                    
+                    ElectionId = ec.ElectionId,
+                    CandidateId = DocumentNo
+
                 };
 
                 using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
@@ -69,6 +83,9 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
                     msg = "Candidate Created successfully";
                 }
+
+                //update last used number
+                AppFunctions.UpdateNumberSeries(CandidatesCode, DocumentNo);
             }
             catch(Exception es)
             {
@@ -82,47 +99,6 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult ListStudents()
-        {          
-            List<ElectionManagementSystem.Student> studentlist = new List<ElectionManagementSystem.Student>();
-
-            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
-            {
-                var students = dbEntities.Students.ToList();
-
-                foreach (var student in students)
-                {
-                    studentlist.Add(new ElectionManagementSystem.Student
-                    {
-                        Name = student.Name,
-                        StudentId = student.StudentId
-                    });
-                }
-
-            }
-
-            return Json(JsonConvert.SerializeObject(studentlist), JsonRequestBehavior.AllowGet);
-        }        
-        public JsonResult ListPositions()
-        {
-            List<ElectionPosition> positionlist = new List<ElectionPosition>();            
-
-            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
-            {
-                var positions = dbEntities.ElectionPositions.ToList();
-
-                foreach (var position in positions)
-                {
-                    positionlist.Add(new ElectionPosition
-                    {
-                        Name = position.Name,
-                        PositionId = position.PositionId
-                    });
-                }
-            }
-            return Json(JsonConvert.SerializeObject(positionlist), JsonRequestBehavior.AllowGet);
-        }
-
+        }      
     }
 }

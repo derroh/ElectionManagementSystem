@@ -18,6 +18,7 @@ namespace ElectionManagementSystem.Models
     {
         public string PositionId { get; set; }
         public string PositionName { get; set; }
+        public int PositionSequence { get; set; }
         public Candidates[] Candidates { get; set; }
     }
 

@@ -17,5 +17,6 @@ namespace ElectionManagementSystem
         public string PositionId { get; set; }
         public string Name { get; set; }
         public string ElectionId { get; set; }
+        public int Sequence { get; set; }
     }
 }

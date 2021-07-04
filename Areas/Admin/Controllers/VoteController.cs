@@ -27,6 +27,8 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
             if(election != null)
             {
+                int items = _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList().Count;
+             
                 foreach (var item in _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList())
                 {
                     foreach (var candidate in _db.ElectionCandidates.Where(e => e.ElectionId == election.ElectionId && e.PositionId == item.PositionId).ToList())
@@ -36,7 +38,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                             candi.Add(new Models.Candidates
                             {
                                 CandidateID = candidate.CandidateId,
-                                CandidateName = candidate.Student.Name,
+                                CandidateName = GetCandidateName(candidate.StudentId), //change this, add Foreign key rshps
                                 CandidateStudentId = candidate.StudentId,
                                 ElectralPositionId = candidate.PositionId
                             });
@@ -45,6 +47,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                             {
                                 Candidates = candi.ToArray(),
                                 PositionId = item.PositionId,
+                                PositionSequence = item.Sequence,
                                 PositionName = item.Name
                             });
                         }                      
@@ -144,6 +147,13 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetCandidateName(string studentId)
+        {
+            var check = _db.Students.FirstOrDefault(s => s.StudentId == studentId);
+            
+            return check.Name;
         }
     }
 }

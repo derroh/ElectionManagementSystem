@@ -22,8 +22,8 @@
                                 @foreach(ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
                                 {
                                     
-                                    <li data-step="@position.PositionId" class="active">
-                                        <span class="step">@position.PositionId</span>
+                                    <li data-step="@position.PositionSequence" class="active">
+                                        <span class="step">@position.PositionSequence</span>
                                         <span class="title">@position.PositionName</span>
                                     </li>
                                 }
@@ -42,7 +42,7 @@
                             <form class="form-horizontal" id="ballot-form" method="get">
                                 @foreach (ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
                                 {
-                                <div class="step-pane active" data-step="@position.PositionId">
+                                <div class="step-pane active" data-step="@position.PositionSequence">
 
                                     <div class="center">
                                         <h3 class="blue lighter">Choose a contestant from the options below</h3>
