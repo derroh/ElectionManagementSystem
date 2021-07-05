@@ -11,67 +11,8 @@ namespace ElectionManagementSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private ElectionManagementSystemEntities _db = new ElectionManagementSystemEntities();
-        // GET: Home
-        [AllowAnonymous]
-        public ActionResult Index()
-        {
-            if (Session["idUser"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
-        }      
+        private ElectionManagementSystemEntities _db = new ElectionManagementSystemEntities();          
 
-        
-        public ActionResult Login()
-        {            
-            return View(); //Returns login view
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(Models.UserLogin _user)
-        {
-            string msg = "";
-
-            try
-            {
-                if (ModelState.IsValid)
-                {
-
-
-                    var f_password = GetMD5(_user.Password);
-                    var data = _db.Users.Where(s => s.Email.Equals(_user.Email) && s.Password.Equals(f_password)).ToList();
-                    if (data.Count() > 0)
-                    {
-                        //add session
-                        Session["FullName"] = data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName;
-                        Session["Email"] = data.FirstOrDefault().Email;
-                        Session["idUser"] = data.FirstOrDefault().FirstName;
-                        return RedirectToAction("Index", "Home", new { area = "Admin" });
-                    }
-                    else
-                    {
-                        msg = "Login failed";
-                        ViewBag.Message = msg;
-                    }
-                }
-                else
-                {
-                    string x = null;
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    x = errors.ToString();
-                }
-            }
-            catch(Exception es)
-            {
-
-            }
-            return View(_user);
-        }
         public ActionResult Register()
         {           
             return View();
@@ -121,13 +62,6 @@ namespace ElectionManagementSystem.Controllers
         {
             return View();
         }
-        //Logout
-        [Authorize]
-        public ActionResult Logout()
-        {
-            Session.Clear();//remove session
-            return RedirectToAction("Login");
-        }
 
         //create a string MD5
         public static string GetMD5(string str)
@@ -144,5 +78,6 @@ namespace ElectionManagementSystem.Controllers
             }
             return byte2String;
         }
+
     }
 }

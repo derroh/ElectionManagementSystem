@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private ElectionManagementSystemEntities _db = new ElectionManagementSystemEntities();
@@ -26,10 +27,24 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             mymodel.VotesCast = Ballots.Count;
             return View(mymodel);
         }
-        //[Authorize]
-        public ActionResult Logout()
+        public ActionResult LogOff()
         {
-            Session.Clear();//remove session
+            try
+            {
+                // Setting.
+                var ctx = Request.GetOwinContext();
+                var authenticationManager = ctx.Authentication;
+
+                // Sign Out.
+                authenticationManager.SignOut();
+            }
+            catch (Exception ex)
+            {
+                // Info
+                throw ex;
+            }
+
+            // Info.
             return Redirect("~/");
         }
     }

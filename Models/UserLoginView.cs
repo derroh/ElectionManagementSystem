@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ElectionManagementSystem.Models
 {
-    public class UserLogin
+    public class UserLoginView
     {
 
         [Required(ErrorMessage = "Please enter email")]

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ElectionsController : Controller
     {
         private static ElectionManagementSystemEntities _db = new ElectionManagementSystemEntities();

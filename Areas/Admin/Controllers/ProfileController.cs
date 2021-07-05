@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         // GET: Admin/Profile

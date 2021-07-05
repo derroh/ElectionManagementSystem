@@ -8,6 +8,7 @@ using System.Web.Services;
 
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
+    [Authorize]
     public class CandidatesController : Controller
     {
         private static ElectionManagementSystemEntities _db = new ElectionManagementSystemEntities();

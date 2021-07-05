@@ -1,4 +1,4 @@
-﻿@model ElectionManagementSystem.Models.UserLogin
+﻿@model ElectionManagementSystem.Models.UserLoginView
 
 @{
     Layout = null;
@@ -82,7 +82,7 @@
                                         }
 
 
-                                        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
                                         {
                                             @Html.AntiForgeryToken()
 
@@ -217,4 +217,5 @@
     </script>
 </body>
 </html>
+
 
