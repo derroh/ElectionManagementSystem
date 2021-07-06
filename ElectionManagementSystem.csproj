@@ -180,6 +180,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CandidatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ElectionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PositionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
@@ -191,6 +192,7 @@
       <DependentUpon>ElectionModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomValidation\Password.cs" />
     <Compile Include="CustomValidation\PhoneNumber.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="ElectionPosition.cs">
       <DependentUpon>ElectionModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmailFunctions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -439,6 +442,7 @@
     <Content Include="Areas\Student\Views\Shared\_StudentDashboardView.cshtml" />
     <Content Include="Areas\Student\Views\Home\Index.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Error\PageNotFound.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -464,6 +468,8 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Reset.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

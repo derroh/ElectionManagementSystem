@@ -61,8 +61,28 @@ namespace ElectionManagementSystem.Controllers
                 if (this.Request.IsAuthenticated)
                 {
                     // Info.
-                    //return this.RedirectToLocal(returnUrl);
-                    return Redirect(returnUrl);
+                    try
+                    {
+                        // Setting.
+                        var ctx = Request.GetOwinContext();
+                        var authenticationManager = ctx.Authentication;
+
+                        // Sign Out.
+                        authenticationManager.SignOut();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Info
+                        throw ex;
+                    }
+
+                    // Info.
+                    return this.RedirectToAction("Login", "Account");
+
+                }
+                else
+                {
+                    return View();
                 }
             }
             catch (Exception ex)

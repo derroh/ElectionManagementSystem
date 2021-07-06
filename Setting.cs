@@ -25,5 +25,9 @@ namespace ElectionManagementSystem
         public string PositionsSeriesCode { get; set; }
         public string CandidatesSeriesCode { get; set; }
         public string ElectionsSeriesCode { get; set; }
+        public string GmailUsername { get; set; }
+        public string GmailPassword { get; set; }
+        public string EmailSender { get; set; }
+        public string StudentsSeriesCode { get; set; }
     }
 }

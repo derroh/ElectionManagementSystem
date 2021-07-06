@@ -11,7 +11,7 @@ jQuery(function ($) {
 	
 
 	$.ajax({
-		url: '/Admin/Elections/ListElections',
+		url: '/Admin/Elections/ListElections', 
 
 		type: "POST",
 		dataType: "json",
@@ -443,9 +443,9 @@ jQuery(function ($) {
 
 
 	$.mask.definitions['~'] = '[+-]';
-	$('#phone').mask('+254 999-999999');
+	$('#Phone').mask('+254 999-999999');
 
-	jQuery.validator.addMethod("phone", function (value, element) {
+	jQuery.validator.addMethod("Phone", function (value, element) {
 		return this.optional(element) || /^\+\d{3}\ \d{3}\-\d{6}( x\d{1,6})?$/.test(value);
 	}, "Enter a valid phone number.");
 
@@ -455,20 +455,20 @@ jQuery(function ($) {
 		focusInvalid: false,
 		ignore: "",
 		rules: {
-			email: {
+			Email: {
 				required: true,
 				email: true
 			},
-			password: {
+			Password: {
 				required: true,
 				minlength: 5
 			},
-			password2: {
+			ConfirmPassword: {
 				required: true,
 				minlength: 5,
-				equalTo: "#password"
+				equalTo: "#Password"
 			},
-			phone: {
+			Phone: {
 				required: true,
 				phone: 'required'
 			},
@@ -484,7 +484,7 @@ jQuery(function ($) {
 			Faculty: {
 				required: true
 			},
-			gender: {
+			Gender: {
 				required: true,
 			},
 			YearOfStudy: {
@@ -493,14 +493,15 @@ jQuery(function ($) {
 		},
 
 		messages: {
-			email: {
+			Email: {
 				required: "Please provide a valid email.",
 				email: "Please provide a valid email."
 			},
-			password: {
+			Password: {
 				required: "Please specify a password.",
 				minlength: "Please specify a secure password."
 			},
+			Phone: "Please provide a valid number",
 			Faculty: "Please choose faculty",
 			YearOfStudy: "Please choose year of study"
 		},
@@ -544,7 +545,7 @@ jQuery(function ($) {
 			//to get alert popup  	
 
 			jQuery.ajax({
-				url: './CreateElection',
+				url: '/Admin/Students/CreateStudent',
 				type: "POST",
 				data: valdata,
 				dataType: "json",
