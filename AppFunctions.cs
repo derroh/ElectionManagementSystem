@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ElectionManagementSystem
 {
@@ -197,6 +198,43 @@ namespace ElectionManagementSystem
         {            
             Regex regex = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$");
             return regex.IsMatch(s);
+        }
+    }
+    public static class HtmlUtility
+    {
+
+        public static string IsActive(this HtmlHelper html,
+                                  string control,
+                                  string action)
+        {
+            var routeData = html.ViewContext.RouteData;
+
+            var routeAction = (string)routeData.Values["action"];
+            var routeControl = (string)routeData.Values["controller"];
+
+            // must match both
+            var returnActive = control == routeControl &&
+                               action == routeAction;
+
+            return returnActive ? "active open" : "";
+        }
+        public static string IsParentActive(this HtmlHelper html,
+                                 string control,
+                                 string action)
+        {
+            var routeData = html.ViewContext.RouteData;
+
+            var routeAction = (string)routeData.Values["action"];
+            var routeControl = (string)routeData.Values["controller"];
+
+            string returnText = "";
+
+            if ((routeAction != null || routeControl != null) && control == routeControl)
+            {
+                returnText = "active open";
+            }
+
+            return returnText;
         }
     }
 }

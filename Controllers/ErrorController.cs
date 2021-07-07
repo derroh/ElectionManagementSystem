@@ -29,9 +29,9 @@ namespace ElectionManagementSystem.Controllers
         }
 
         [ActionName("500")]
-        public ActionResult ServerError()
+        public ActionResult InternalServerError()
         {
-            return View();
+            return View("Error");
         }
     }
 }
