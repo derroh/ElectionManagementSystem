@@ -46,6 +46,7 @@ namespace ElectionManagementSystem.Controllers
         #endregion
 
         #region Login methods
+     
 
         /// <summary>
         /// GET: /Account/Login
@@ -266,6 +267,64 @@ namespace ElectionManagementSystem.Controllers
         #endregion
 
         #endregion
+
+        public ActionResult ResetPassword(string id)
+        {
+            //Verify the reset password link
+            //Find account associated with this link
+            //redirect to reset password page
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return HttpNotFound();
+            }
+
+            using (var context = new ElectionManagementSystemEntities())
+            {
+                var user = context.Users.Where(a => a.ResetPasswordCode == id).FirstOrDefault();
+                if (user != null)
+                {
+                    ResetPasswordViewModel model = new ResetPasswordViewModel();
+                    model.ResetCode = id;
+                    return View(model);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            var message = "";
+            if (ModelState.IsValid)
+            {
+                using (var context = new ElectionManagementSystemEntities())
+                {
+                    var user = context.Users.Where(a => a.ResetPasswordCode == model.ResetCode).FirstOrDefault();
+                    if (user != null)
+                    {
+                        //you can encrypt password here, we are not doing it
+                        user.Password =GetMD5(model.NewPassword);
+                        //make resetpasswordcode empty string now
+                        user.ResetPasswordCode = "";
+                        //to avoid validation issues, disable it
+                        context.Configuration.ValidateOnSaveEnabled = false;
+                        context.SaveChanges();
+                        message = "New password updated successfully";
+                    }
+                }
+            }
+            else
+            {
+                message = "Something invalid";
+            }
+            ViewBag.Message = message;
+
+            // return this.RedirectToAction("Login", "Account");
+            return View();
+        }
 
         public static string GetMD5(string str)
         {

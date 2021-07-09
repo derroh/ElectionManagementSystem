@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ElectionManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ElectionManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ballots">
           <Key>
             <PropertyRef Name="BallotId" />
@@ -95,10 +95,11 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="StudentId" Type="nvarchar" MaxLength="50" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ResetPasswordCode" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="ElectionManagementModelStoreContainer">
           <EntitySet Name="Ballots" EntityType="Self.Ballots" Schema="dbo" store:Type="Tables" />
@@ -110,7 +111,8 @@
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ElectionManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -152,6 +154,16 @@
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="NumberSery">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartingNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EndingNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUsedNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Setting">
           <Key>
             <PropertyRef Name="Id" />
@@ -162,14 +174,14 @@
           <Property Name="GoogleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GmailAppPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GmailSenderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GmailUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GmailPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailSender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SMTPPort" Type="Int32" />
           <Property Name="SMTPHost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PositionsSeriesCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="CandidatesSeriesCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="ElectionsSeriesCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="GmailUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GmailPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmailSender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StudentsSeriesCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Student">
@@ -194,31 +206,22 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StudentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StudentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Role" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ResetPasswordCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="ElectionManagementSystemEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Ballots" EntityType="Self.Ballot" />
           <EntitySet Name="ElectionCandidates" EntityType="Self.ElectionCandidate" />
           <EntitySet Name="ElectionPositions" EntityType="Self.ElectionPosition" />
           <EntitySet Name="Elections" EntityType="Self.Election" />
+          <EntitySet Name="NumberSeries" EntityType="Self.NumberSery" />
           <EntitySet Name="Settings" EntityType="Self.Setting" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="NumberSeries" EntityType="ElectionManagementModel.NumberSery" />
         </EntityContainer>
-        <EntityType Name="NumberSery">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="StartingNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EndingNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastUsedNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -250,10 +253,10 @@
           <EntitySetMapping Name="ElectionPositions">
             <EntityTypeMapping TypeName="ElectionManagementModel.ElectionPosition">
               <MappingFragment StoreEntitySet="ElectionPositions">
-                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
                 <ScalarProperty Name="PositionId" ColumnName="PositionId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ElectionId" ColumnName="ElectionId" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -267,24 +270,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NumberSeries">
+            <EntityTypeMapping TypeName="ElectionManagementModel.NumberSery">
+              <MappingFragment StoreEntitySet="NumberSeries">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartingNumber" ColumnName="StartingNumber" />
+                <ScalarProperty Name="EndingNumber" ColumnName="EndingNumber" />
+                <ScalarProperty Name="LastUsedNumber" ColumnName="LastUsedNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="ElectionManagementModel.Setting">
               <MappingFragment StoreEntitySet="Settings">
-                <ScalarProperty Name="StudentsSeriesCode" ColumnName="StudentsSeriesCode" />
-                <ScalarProperty Name="EmailSender" ColumnName="EmailSender" />
-                <ScalarProperty Name="GmailPassword" ColumnName="GmailPassword" />
-                <ScalarProperty Name="GmailUsername" ColumnName="GmailUsername" />
-                <ScalarProperty Name="ElectionsSeriesCode" ColumnName="ElectionsSeriesCode" />
-                <ScalarProperty Name="CandidatesSeriesCode" ColumnName="CandidatesSeriesCode" />
-                <ScalarProperty Name="PositionsSeriesCode" ColumnName="PositionsSeriesCode" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AfricasTalkingAppName" ColumnName="AfricasTalkingAppName" />
                 <ScalarProperty Name="AfricasTalkingApiKey" ColumnName="AfricasTalkingApiKey" />
                 <ScalarProperty Name="GoogleId" ColumnName="GoogleId" />
                 <ScalarProperty Name="GmailAppPassword" ColumnName="GmailAppPassword" />
                 <ScalarProperty Name="GmailSenderName" ColumnName="GmailSenderName" />
+                <ScalarProperty Name="GmailUsername" ColumnName="GmailUsername" />
+                <ScalarProperty Name="GmailPassword" ColumnName="GmailPassword" />
+                <ScalarProperty Name="EmailSender" ColumnName="EmailSender" />
                 <ScalarProperty Name="SMTPPort" ColumnName="SMTPPort" />
                 <ScalarProperty Name="SMTPHost" ColumnName="SMTPHost" />
+                <ScalarProperty Name="PositionsSeriesCode" ColumnName="PositionsSeriesCode" />
+                <ScalarProperty Name="CandidatesSeriesCode" ColumnName="CandidatesSeriesCode" />
+                <ScalarProperty Name="ElectionsSeriesCode" ColumnName="ElectionsSeriesCode" />
+                <ScalarProperty Name="StudentsSeriesCode" ColumnName="StudentsSeriesCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -314,17 +328,7 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NumberSeries">
-            <EntityTypeMapping TypeName="ElectionManagementModel.NumberSery">
-              <MappingFragment StoreEntitySet="NumberSeries">
-                <ScalarProperty Name="LastUsedNumber" ColumnName="LastUsedNumber" />
-                <ScalarProperty Name="EndingNumber" ColumnName="EndingNumber" />
-                <ScalarProperty Name="StartingNumber" ColumnName="StartingNumber" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -77,7 +77,6 @@ namespace ElectionManagementSystem
             var check = _db.Users.FirstOrDefault(s => s.Email == Email);
             if (check == null)
             {
-
                 status = true;
             }
             return status;

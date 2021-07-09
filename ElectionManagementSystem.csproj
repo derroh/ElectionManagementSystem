@@ -218,7 +218,7 @@
     <Compile Include="Areas\Student\Controllers\VoteController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Ballot.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -228,28 +228,28 @@
     <Compile Include="CustomValidation\EmailAddress.cs" />
     <Compile Include="CustomValidation\StudentId.cs" />
     <Compile Include="Election.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ElectionCandidate.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ElectionModel.Context.cs">
+    <Compile Include="ElectionManagementSystemModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ElectionModel.Context.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ElectionModel.cs">
+    <Compile Include="ElectionManagementSystemModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ElectionModel.Designer.cs">
+    <Compile Include="ElectionManagementSystemModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ElectionModel.edmx</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ElectionPosition.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmailFunctions.cs" />
     <Compile Include="Global.asax.cs">
@@ -258,25 +258,27 @@
     <Compile Include="Models\Ballot.cs" />
     <Compile Include="Models\EditPositionView.cs" />
     <Compile Include="Models\NameValue.cs" />
+    <Compile Include="Models\PasswordResetViewModel.cs" />
     <Compile Include="Models\RequestResponse.cs" />
     <Compile Include="Models\ElectionCandidateView.cs" />
     <Compile Include="Models\RegisterUser.cs" />
+    <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\UserLoginView.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="NumberSery.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Student.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>ElectionModel.tt</DependentUpon>
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -420,15 +422,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="ElectionModel.Context.tt">
+    <Content Include="ElectionManagementSystemModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ElectionModel.edmx</DependentUpon>
-      <LastGenOutput>ElectionModel.Context.cs</LastGenOutput>
+      <DependentUpon>ElectionManagementSystemModel.edmx</DependentUpon>
+      <LastGenOutput>ElectionManagementSystemModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ElectionModel.tt">
+    <Content Include="ElectionManagementSystemModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ElectionModel.edmx</DependentUpon>
-      <LastGenOutput>ElectionModel.cs</LastGenOutput>
+      <DependentUpon>ElectionManagementSystemModel.edmx</DependentUpon>
+      <LastGenOutput>ElectionManagementSystemModel.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -462,19 +464,19 @@
     <Content Include="Areas\Admin\Views\Elections\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Vote\CastVote.cshtml" />
     <Content Include="Areas\Admin\Views\Elections\Edit.cshtml" />
-    <EntityDeploy Include="ElectionModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ElectionModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="ElectionModel.edmx.diagram">
-      <DependentUpon>ElectionModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_StudentDashboardView.cshtml" />
     <Content Include="Areas\Student\Views\Home\Index.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Error\PageNotFound.cshtml" />
     <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
+    <EntityDeploy Include="ElectionManagementSystemModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ElectionManagementSystemModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ElectionManagementSystemModel.edmx.diagram">
+      <DependentUpon>ElectionManagementSystemModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -515,6 +517,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

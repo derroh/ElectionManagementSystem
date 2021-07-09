@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ElectionManagementSystem.Controllers
 {
+    using ElectionManagementSystem.Models;
     public class HomeController : Controller
     {
         private ElectionManagementSystemEntities _db = new ElectionManagementSystemEntities();          
@@ -19,7 +20,7 @@ namespace ElectionManagementSystem.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Models.RegisterUser _user)
+        public ActionResult Register(RegisterUser _user)
         {
             if (ModelState.IsValid)
             {               
@@ -61,6 +62,48 @@ namespace ElectionManagementSystem.Controllers
         public ActionResult Reset()
         {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(PasswordResetViewModel p)
+        {
+            if (ModelState.IsValid)
+            {
+                using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+                {
+                    var user = dbEntities.Users.Where(u => u.Email == p.Email).SingleOrDefault();
+
+                    if(user != null)
+                    {
+                        string resetCode = Guid.NewGuid().ToString();
+                        var verifyUrl = "/Account/ResetPassword/" + resetCode;
+                        var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+                        user.ResetPasswordCode = resetCode;
+
+                        //This line I have added here to avoid confirm password not match issue , as we had added a confirm password property 
+
+                        dbEntities.Configuration.ValidateOnSaveEnabled = false;
+                        dbEntities.SaveChanges();
+
+                        string domainName = Request.Url.GetLeftPart(UriPartial.Authority);
+
+                        string EmailBody = EmailFunctions.EmailBody(
+                            "Password Reset Success!", 
+                            "Hi "+user.FirstName+", we are sorry that you forgot your password",
+                            "Please click on the button below to reset it!",
+                            domainName+verifyUrl,
+                            "Reset"
+                            );
+
+                        EmailFunctions.SendMail(p.Email, user.FirstName, "Password Reset", EmailBody);
+
+
+                        ViewBag.Message = "Reset password link has been sent to your email id.";
+                    }
+                }
+            }
+            return this.RedirectToAction("Login", "Account");
         }
 
         //create a string MD5

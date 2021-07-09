@@ -31,11 +31,11 @@ namespace ElectionManagementSystem.Models
         public string Password { get; set; }
 
 
-        
-       // [Required(ErrorMessage = "Please confirm your password")]
-       // [IsPasswordStrong(ErrorMessage = "Kindly provide a strong password")]
-       // [PasswordSame("Password", ErrorMessage = "Your passwords do not match")]
-        // [System.ComponentModel.DataAnnotations.Compare("Password")]
+
+        // [Required(ErrorMessage = "Please confirm your password")]
+        // [IsPasswordStrong(ErrorMessage = "Kindly provide a strong password")]
+        // [PasswordSame("Password", ErrorMessage = "Your passwords do not match")]
+        [Compare("Password", ErrorMessage = "Password and confirm password does not match")]
         public string ConfirmPassword { get; set; }
 
 

@@ -29,9 +29,9 @@ namespace ElectionManagementSystem
         public virtual DbSet<ElectionCandidate> ElectionCandidates { get; set; }
         public virtual DbSet<ElectionPosition> ElectionPositions { get; set; }
         public virtual DbSet<Election> Elections { get; set; }
+        public virtual DbSet<NumberSery> NumberSeries { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<NumberSery> NumberSeries { get; set; }
     }
 }

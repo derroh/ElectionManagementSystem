@@ -22,5 +22,6 @@ namespace ElectionManagementSystem
         public string Phone { get; set; }
         public string StudentId { get; set; }
         public string Role { get; set; }
+        public string ResetPasswordCode { get; set; }
     }
 }
