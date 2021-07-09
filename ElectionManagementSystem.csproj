@@ -214,6 +214,8 @@
     <Compile Include="Areas\Admin\Controllers\StudentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\VoteController.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Student\Controllers\ProfileController.cs" />
+    <Compile Include="Areas\Student\Controllers\VoteController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Ballot.cs">
       <DependentUpon>ElectionModel.tt</DependentUpon>
@@ -472,6 +474,7 @@
     <Content Include="Areas\Student\Views\Home\Index.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Error\PageNotFound.cshtml" />
+    <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -531,8 +534,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Profile\" />
     <Folder Include="Areas\Student\Data\" />
+    <Folder Include="Areas\Student\Views\Profile\" />
+    <Folder Include="Areas\Student\Views\Vote\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
