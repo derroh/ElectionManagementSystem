@@ -40,7 +40,11 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             return View(candidate);
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(string Id)
+        {
+            return View();
+        }
+        public ActionResult Candidate(string Id)
         {
             return View();
         }

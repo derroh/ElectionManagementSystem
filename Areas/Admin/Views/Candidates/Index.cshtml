@@ -9,7 +9,7 @@
         <!-- PAGE CONTENT BEGINS -->
         <div class="row">
             <div class="col-xs-12">
-                <table id="simple-table" class="table  table-bordered table-hover">
+                <table id="candidates-table" class="table  table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="center">
@@ -46,7 +46,7 @@
 
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <a class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                        <a href="@Url.Action("Candidate", "Candidates", new { id = candidate.electionCandidate.CandidateId })" class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                         </a>
 
@@ -54,7 +54,7 @@
                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                         </a>
 
-                                        <a class="btn btn-xs btn-danger tooltip-error delete" data-rel="tooltip" title="Delete">
+                                        <a class="btn btn-xs btn-danger tooltip-error deletecandidate" data-docno="@candidate.electionCandidate.CandidateId" data-recordname="@candidate.student.Name" data-rel="tooltip" title="Delete">
                                             <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
                                         </a>
                                     </div>
@@ -67,7 +67,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                    <a href="@Url.Action("Candidate", "Candidates", new { id = candidate.electionCandidate.CandidateId })"  class="tooltip-info" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -83,7 +83,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error delete" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error deletecandidate" data-docno="@candidate.electionCandidate.CandidateId" data-recordname="@candidate.student.Name" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>
