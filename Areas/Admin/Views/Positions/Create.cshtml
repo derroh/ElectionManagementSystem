@@ -34,7 +34,7 @@
                                          
                                             @Html.DropDownListFor(m => m.ElectionId,
                                                                 new SelectList(ViewBag.Elections, "ElectionId", "Name", ""),
-                                                                "Select Gender",
+                                                                "Select election",
                                                                 new { @class = "select2", @data_placeholder = "Click to Choose..." })
                                         </div>                                           
                                             @Html.ValidationMessageFor(m => m.ElectionId, "", new { @class = "text-danger  " })

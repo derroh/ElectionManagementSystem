@@ -18,26 +18,8 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         //[Authorize]
         public ActionResult Index()
         {
-            List<ElectionPositionListViewModel> positionslist = new List <ElectionPositionListViewModel>();
-
-            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
-            {
-                var positions = dbEntities.ElectionPositions.Take(10).OrderBy(ep => ep.Sequence).ToList();
-
-                foreach (var position in positions)
-                {
-                    positionslist.Add(new ElectionPositionListViewModel
-                    {
-                        Name = position.Name,
-                        Sequence =  AppFunctions.AddOrdinal(position.Sequence),
-                        ElectionId = position.ElectionId,
-                        PositionId = position.PositionId
-
-                    });
-                }
-            }
-
-            return View(positionslist);
+            var positions = _db.ElectionPositions.Take(10).OrderBy(ep => ep.Sequence).ToList();
+            return View(positions);
         }        
         public ActionResult Create(ElectionPositionViewModel ep)
         {
@@ -139,25 +121,8 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
         [HttpGet]
         public ActionResult Edit(string Id)
-        {          
-            List<Election> electionlist = new List<Election>();
-
-            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
-            {
-                var elections = dbEntities.Elections.ToList();
-
-                foreach (var election in elections)
-                {
-                    electionlist.Add(new ElectionManagementSystem.Election
-                    {
-                        Name = election.Name,
-                        ElectionId = election.ElectionId,
-                        EndDate = election.EndDate,
-                        StartDate = election.StartDate
-
-                    });
-                }
-            }
+        {        
+            var electionlist = _db.Elections.ToList();
             ViewBag.Elections = electionlist;
 
             //
@@ -215,8 +180,6 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         public ActionResult UpdatePosition(ElectionPositionViewModel ep)
         {
             string message = "", status = "";
-
-            string test = ep.Name;
 
             try
             {

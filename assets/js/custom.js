@@ -318,10 +318,54 @@ jQuery(function ($) {
 		if ($('#electralcandidateform').valid()) {
 			//Serialize the form datas.  
 			var valdata = $("#electralcandidateform").serialize();
-			//to get alert popup  	
+			//to get alert popup  
+
+		//	var urllink = $('#electralcandidateform').attr('action');
 
 			jQuery.ajax({
-				url: './CreateCandidate',
+				url: '/Candidates/CreateCandidate',
+				type: "POST",
+				data: valdata,
+				dataType: "json",
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				success: function (response) {
+					if (response != null) {
+						//console.log(JSON.stringify(response)); //it comes out to be string 
+
+						//we need to parse it to JSON
+						var data = $.parseJSON(response);
+
+						//console.log(data.Message);
+						bootbox.dialog({
+							message: data.Message,
+							buttons: {
+								"success": {
+									"label": "OK",
+									"className": "btn-sm btn-primary"
+								}
+							}
+						});
+					}
+				},
+				error: function (e) {
+					console.log(e.responseText);
+				}
+			});
+		}
+
+		event.preventDefault();
+	});
+	$("#UpdateElectralCandidate").click(function (event) {
+
+		if ($('#electralcandidateform').valid()) {
+			//Serialize the form datas.  
+			var valdata = $("#electralcandidateform").serialize();
+			//to get alert popup  
+
+			//	var urllink = $('#electralcandidateform').attr('action');
+
+			jQuery.ajax({
+				url: '/Candidates/UpdateCandidate',
 				type: "POST",
 				data: valdata,
 				dataType: "json",
@@ -417,47 +461,47 @@ jQuery(function ($) {
 	//separate pages
 
 	//list students
-	$.ajax({
-		url: '/Admin/Students/ListStudents',
-		type: "POST",
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (response) {
-			if (response != null) {
+	//$.ajax({
+	//	url: '/Admin/Students/ListStudents',
+	//	type: "POST",
+	//	dataType: "json",
+	//	contentType: "application/json; charset=utf-8",
+	//	success: function (response) {
+	//		if (response != null) {
 
-				var data = $.parseJSON(response);
+	//			var data = $.parseJSON(response);
 
-				$.each(data, function (i, item) {
-					$("#StudentId").append($('<option></option>').attr("value", item.StudentId).text(item.Name));
-				});
+	//			$.each(data, function (i, item) {
+	//				$("#StudentId").append($('<option></option>').attr("value", item.StudentId).text(item.Name));
+	//			});
 
-			}
-		},
-		error: function (e) {
-			console.log(e.responseText);
-		}
-	});
+	//		}
+	//	},
+	//	error: function (e) {
+	//		console.log(e.responseText);
+	//	}
+	//});
 	//list electral positions
-	$.ajax({
-		url: '/Admin/Positions/ListPositions',
-		type: "POST",
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (response) {
-			if (response != null) {
+	//$.ajax({
+	//	url: '/Admin/Positions/ListPositions',
+	//	type: "POST",
+	//	dataType: "json",
+	//	contentType: "application/json; charset=utf-8",
+	//	success: function (response) {
+	//		if (response != null) {
 
-				var data = $.parseJSON(response);
+	//			var data = $.parseJSON(response);
 
-				$.each(data, function (i, item) {
-					$("#PositionId").append($('<option></option>').attr("value", item.PositionId).text(item.Name));
-				});
+	//			$.each(data, function (i, item) {
+	//				$("#PositionId").append($('<option></option>').attr("value", item.PositionId).text(item.Name));
+	//			});
 
-			}
-		},
-		error: function (e) {
-			console.log(e.responseText);
-		}
-	});
+	//		}
+	//	},
+	//	error: function (e) {
+	//		console.log(e.responseText);
+	//	}
+	//});
 
 	/// Elections
 

@@ -1,4 +1,5 @@
-﻿
+﻿@model ElectionManagementSystem.Areas.Admin.ViewModels.CandidateViewModel
+
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
@@ -17,16 +18,43 @@
                 <div class="step-content pos-rel">
                     <h3 class="lighter block green">Enter the following information</h3>
 
-                    <form class="form-horizontal" id="electralcandidateform" method="get">
+                    @using (Html.BeginForm("CreateCandidate", "Candidates", FormMethod.Post, new { @id = "electralcandidateform", @class = "form-horizontal" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="ElectionId">Election</label>
+
+                            <div class="col-xs-12 col-sm-9">
+
+                                <div class="clearfix">
+
+                                    @Html.DropDownListFor(m => m.ElectionId,
+                                                        new SelectList(ViewBag.Elections, "ElectionId", "Name", Model.ElectionId),
+                                                        "Select Election",
+                                                        new { @class = "select2", @data_placeholder = "Click to Choose..." })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ElectionId, "", new { @class = "text-danger  " })
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Student</label>
 
                             <div class="col-xs-12 col-sm-9">
-                                <select id="StudentId" name="StudentId" class="select2" data-placeholder="Click to Choose...">
-                                    <option value="">&nbsp;</option>
-                                </select>
+
+                                <div class="clearfix">
+
+                                    @Html.DropDownListFor(m => m.StudentId,
+                                                        new SelectList(ViewBag.Students, "StudentId", "Name", Model.StudentId),
+                                                        "Select Student",
+                                                        new { @class = "select2", @data_placeholder = "Click to Choose..." })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.StudentId, "", new { @class = "text-danger  " })
                             </div>
                         </div>
+
 
                         <div class="space-2"></div>
 
@@ -34,14 +62,22 @@
                             <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Electral Position</label>
 
                             <div class="col-xs-12 col-sm-9">
-                                <select id="PositionId" name="PositionId" class="select2" data-placeholder="Click to Choose...">
-                                    <option value="">&nbsp;</option>
-                                </select>
+
+                                <div class="clearfix">
+
+                                    @Html.DropDownListFor(m => m.PositionId,
+                                                        new SelectList(ViewBag.Positions, "PositionId", "Name", Model.PositionId),
+                                                        "Select posiitions",
+                                                        new { @class = "select2", @data_placeholder = "Click to Choose..." })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.PositionId, "", new { @class = "text-danger  " })
                             </div>
                         </div>
 
                         <div class="space-2"></div>
-                    </form>
+
+                        @Html.HiddenFor(m => m.CandidateId)
+                    }
                 </div>
             </div>
 

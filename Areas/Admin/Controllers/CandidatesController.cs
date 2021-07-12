@@ -9,6 +9,7 @@ using System.Web.Services;
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
     using ElectionManagementSystem.Models;
+    using ElectionManagementSystem.Areas.Admin.ViewModels;
 
     [Authorize]
     public class CandidatesController : Controller
@@ -44,17 +45,63 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
         public ActionResult Edit(string Id)
         {
-            return View();
+            var elections = _db.Elections.ToList();
+            var positionlist = _db.ElectionPositions.ToList();
+            var studentlist = _db.Students.ToList();
+
+            ViewBag.Elections = elections;
+            ViewBag.Positions = positionlist;
+            ViewBag.Students = studentlist;
+            
+            var candidate = _db.ElectionCandidates.Where(s => s.CandidateId == Id).FirstOrDefault();
+
+            var _ElectionCandidate = new CandidateViewModel
+            {
+                CandidateId = candidate.CandidateId,
+                ElectionId = candidate.ElectionId,
+                PositionId = candidate.PositionId,
+                StudentId = candidate.StudentId
+            };
+
+            return View(_ElectionCandidate);
         }
         public ActionResult Candidate(string Id)
         {
-            return View();
+            var elections = _db.Elections.ToList();
+            var positionlist = _db.ElectionPositions.ToList();
+            var studentlist = _db.Students.ToList();
+
+            ViewBag.Elections = elections;
+            ViewBag.Positions = positionlist;
+            ViewBag.Students = studentlist;
+
+            var candidate = _db.ElectionCandidates.Where(s => s.CandidateId == Id).FirstOrDefault();
+
+            var _ElectionCandidate = new CandidateViewModel
+            {
+                CandidateId = candidate.CandidateId,
+                ElectionId = candidate.ElectionId,
+                PositionId = candidate.PositionId,
+                StudentId = candidate.StudentId
+            };
+
+            return View(_ElectionCandidate);
         }
         public ActionResult Create()
         {
+            var elections = _db.Elections.ToList();
+            var positionlist = _db.ElectionPositions.ToList();
+            var studentlist = _db.Students.ToList();
+
+            ViewBag.Elections = elections;
+            ViewBag.Positions = positionlist;
+            ViewBag.Students = studentlist;
+
             return View();
         }
-        public ActionResult CreateCandidate(ElectionCandidate ec)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCandidate(CandidateViewModel ec)
         {
             string msg = "", DocumentNo = "";
 
@@ -140,6 +187,49 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             {
                 Status = status,
                 Message = message
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCandidate(CandidateViewModel ec)
+        {
+            string message = "", status = "";
+
+            try
+            {
+               
+                var candidate = _db.ElectionCandidates.Where(x => x.CandidateId == ec.CandidateId).SingleOrDefault();
+
+                if (candidate != null)
+                {
+                    candidate.ElectionId = ec.ElectionId;
+                    candidate.StudentId = ec.StudentId;
+                    candidate.PositionId = ec.PositionId;
+                    _db.SaveChanges();
+
+                    message = "Candidate updated successfully";
+                    status = "000";
+                }
+                else
+                {
+                    message = "Candidate not found";
+                    status = "900";
+                }
+
+
+            }
+            catch (Exception es)
+            {
+                message = es.Message;
+            }
+
+            var _RequestResponse = new Models.RequestResponse
+            {
+                Message = message,
+
+                Status = status
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
