@@ -10,7 +10,7 @@
         <!-- PAGE CONTENT BEGINS -->
         <div class="row">
             <div class="col-xs-12">
-                <table id="simple-table" class="table  table-bordered table-hover">
+                <table id="elections-table" class="table  table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="center">
@@ -54,7 +54,7 @@
                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                         </a>
 
-                                        <a class="btn btn-xs btn-danger tooltip-error delete" data-rel="tooltip" title="Delete">
+                                        <a class="btn btn-xs btn-danger tooltip-error deleteelection" data-docno="@election.ElectionId" data-recordname="@election.Name" data-rel="tooltip" title="Delete">
                                             <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
                                         </a>
                                     </div>
@@ -83,7 +83,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error delete" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error deleteelection" data-docno="@election.ElectionId" data-recordname="@election.Name" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>
