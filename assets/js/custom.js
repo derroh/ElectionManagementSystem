@@ -303,7 +303,7 @@ jQuery(function ($) {
 				if (result == true) {
 
 					jQuery.ajax({
-						url: '/Leaves/Delete',
+						url: '/Candidates/Delete',
 						type: "POST",
 						data: '{DocumentNo:"' + docno + '" }',
 						dataType: "json",

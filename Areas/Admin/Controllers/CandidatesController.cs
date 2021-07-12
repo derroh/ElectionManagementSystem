@@ -8,6 +8,8 @@ using System.Web.Services;
 
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
+    using ElectionManagementSystem.Models;
+
     [Authorize]
     public class CandidatesController : Controller
     {
@@ -104,6 +106,43 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
-        }      
+        }
+        public ActionResult Delete(string DocumentNo)
+        {
+            string status = "", message = "";
+            
+            try
+            {
+                using (var db = new ElectionManagementSystemEntities())
+                {
+                    var candidate = db.ElectionCandidates.Where(x => x.CandidateId == DocumentNo).SingleOrDefault();
+
+                    if (candidate != null)
+                    {
+                        db.ElectionCandidates.Remove(candidate);
+                        db.SaveChanges();
+                        status = "000";
+                        message = "Delete Success! for Candidate " + DocumentNo;
+                    }
+                    else
+                    {                     
+                        status = "900";
+                        message = "Coouldn't find Candidate " + DocumentNo;
+                    }
+                }
+            }
+            catch (Exception es)
+            {
+                message = es.Message;
+            }
+
+            var _RequestResponse = new RequestResponse
+            {
+                Status = status,
+                Message = message
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
     }
 }
