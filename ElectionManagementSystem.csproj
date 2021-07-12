@@ -213,6 +213,8 @@
     <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\StudentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\VoteController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionPositionListViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionPositionViewModel.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Student\Controllers\VoteController.cs" />
@@ -478,6 +480,7 @@
       <DependentUpon>ElectionManagementSystemModel.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\Candidates\Candidate.cshtml" />
+    <Content Include="Areas\Admin\Views\Positions\ViewPosition.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

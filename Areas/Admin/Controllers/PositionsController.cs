@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
     using ElectionManagementSystem.Models;
+    using ElectionManagementSystem.Areas.Admin.ViewModels;
     [Authorize]
     public class PositionsController : Controller
     {
@@ -17,65 +18,120 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         //[Authorize]
         public ActionResult Index()
         {
-            return View(from positions in _db.ElectionPositions.Take(10)
-                    select positions);
-        }
-        public ActionResult Create(ElectionPosition ep)
-        {                
+            List<ElectionPositionListViewModel> positionslist = new List <ElectionPositionListViewModel>();
+
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var positions = dbEntities.ElectionPositions.Take(10).OrderBy(ep => ep.Sequence).ToList();
+
+                foreach (var position in positions)
+                {
+                    positionslist.Add(new ElectionPositionListViewModel
+                    {
+                        Name = position.Name,
+                        Sequence =  AppFunctions.AddOrdinal(position.Sequence),
+                        ElectionId = position.ElectionId,
+                        PositionId = position.PositionId
+
+                    });
+                }
+            }
+
+            return View(positionslist);
+        }        
+        public ActionResult Create(ElectionPositionViewModel ep)
+        {
+            List<Election> electionlist = new List<Election>();
+
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var elections = dbEntities.Elections.ToList();
+
+                foreach (var election in elections)
+                {
+                    electionlist.Add(new ElectionManagementSystem.Election
+                    {
+                        Name = election.Name,
+                        ElectionId = election.ElectionId,
+                        EndDate = election.EndDate,
+                        StartDate = election.StartDate
+
+                    });
+                }
+            }
+            ViewBag.Elections = electionlist;
+
             return View();
         }
-        public ActionResult CreatePosition(ElectionPosition ep)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePosition(ElectionPositionViewModel ep)
         {
-            string msg = "";
+            string message = "", status = "";
             string DocumentNo = null;
 
             try
             {
-                //Get No Series here
 
-                var settings = _db.Settings.Where(s => s.Id == 1).SingleOrDefault();
-
-                string PositionsCode = settings.PositionsSeriesCode;
-
-                var NumberSeriesData = _db.NumberSeries.Where(s => s.Code == PositionsCode).SingleOrDefault();
-
-                string LastUsedNumber = NumberSeriesData.LastUsedNumber;
-
-                if (LastUsedNumber != "")
+                if (_db.ElectionPositions.Any(o => o.Name == ep.Name))
                 {
-                    DocumentNo = AppFunctions.GetNewDocumentNumber(PositionsCode.Trim(), LastUsedNumber.Trim());
+                    message = "A position with similar name exists";
+                    status = "900";
                 }
-
-                var pos = new ElectionPosition
-                {                    
-                    PositionId = DocumentNo,
-                    Name = ep.Name,
-                    Sequence = ep.Sequence,
-                    ElectionId = DocumentNo= ep.ElectionId
-                };
-
-                using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+                else if (_db.ElectionPositions.Any(o => o.Sequence == ep.Sequence))
                 {
-                    dbEntities.Configuration.ValidateOnSaveEnabled = false;
-                    dbEntities.ElectionPositions.Add(pos);
-                    dbEntities.SaveChanges();
-
-                    msg = "Position Created successfully";
+                    message = "A position with similar sequence exists";
+                    status = "900";
                 }
+                else
+                {
+                    //Get No Series here
 
-                //update last used number
-                AppFunctions.UpdateNumberSeries(PositionsCode, DocumentNo);
+                    var settings = _db.Settings.Where(s => s.Id == 1).SingleOrDefault();
+
+                    string PositionsCode = settings.PositionsSeriesCode;
+
+                    var NumberSeriesData = _db.NumberSeries.Where(s => s.Code == PositionsCode).SingleOrDefault();
+
+                    string LastUsedNumber = NumberSeriesData.LastUsedNumber;
+
+                    if (LastUsedNumber != "")
+                    {
+                        DocumentNo = AppFunctions.GetNewDocumentNumber(PositionsCode.Trim(), LastUsedNumber.Trim());
+                    }
+
+                    var pos = new ElectionPosition
+                    {
+                        PositionId = DocumentNo,
+                        Name = ep.Name,
+                        Sequence = ep.Sequence,
+                        ElectionId = ep.ElectionId
+                    };
+
+                    using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+                    {
+                        dbEntities.Configuration.ValidateOnSaveEnabled = false;
+                        dbEntities.ElectionPositions.Add(pos);
+                        dbEntities.SaveChanges();
+
+                        message = "Position Created successfully";
+                    }
+
+                    //update last used number
+                    AppFunctions.UpdateNumberSeries(PositionsCode, DocumentNo);
+                }               
             }
             catch(Exception es)
             {
-                msg = es.Message;
+                message = es.Message;
+                status = "900";
             }
 
             var _RequestResponse = new Models.RequestResponse
             {
-                Message = msg,
+                Message = message,
 
-                Status = "000"
+                Status = status
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
@@ -83,31 +139,96 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
         [HttpGet]
         public ActionResult Edit(string Id)
-        {
-            var std = _db.ElectionPositions.Where(s => s.PositionId == Id).FirstOrDefault();
-            List<ElectionPosition> electionPosition = new List<ElectionPosition>();
+        {          
+            List<Election> electionlist = new List<Election>();
 
-            electionPosition.Add(new ElectionPosition
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var elections = dbEntities.Elections.ToList();
+
+                foreach (var election in elections)
+                {
+                    electionlist.Add(new ElectionManagementSystem.Election
+                    {
+                        Name = election.Name,
+                        ElectionId = election.ElectionId,
+                        EndDate = election.EndDate,
+                        StartDate = election.StartDate
+
+                    });
+                }
+            }
+            ViewBag.Elections = electionlist;
+
+            //
+            var std = _db.ElectionPositions.Where(s => s.PositionId == Id).FirstOrDefault();
+
+            var _ElectionPosition = new ElectionPositionViewModel
+            {                
+                Name = std.Name,
+                Sequence = std.Sequence,
+                ElectionId = std.ElectionId,
+                PositionId = std.PositionId
+            };           
+
+
+            return View(_ElectionPosition);
+        }
+        public ActionResult ViewPosition(string Id)
+        {
+            List<Election> electionlist = new List<Election>();
+
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var elections = dbEntities.Elections.ToList();
+
+                foreach (var election in elections)
+                {
+                    electionlist.Add(new Election
+                    {
+                        Name = election.Name,
+                        ElectionId = election.ElectionId,
+                        EndDate = election.EndDate,
+                        StartDate = election.StartDate
+
+                    });
+                }
+            }
+            ViewBag.Elections = electionlist;
+
+            //
+            var std = _db.ElectionPositions.Where(s => s.PositionId == Id).FirstOrDefault();
+
+            var _ElectionPosition = new ElectionPositionViewModel
             {
                 Name = std.Name,
+                Sequence = std.Sequence,
+                ElectionId = std.ElectionId,
                 PositionId = std.PositionId
-            });
-           
+            };
 
-            return View(electionPosition);
+
+            return View(_ElectionPosition);
         }
         [HttpPost]
-        public ActionResult UpdatePosition(ElectionPosition ep)
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdatePosition(ElectionPositionViewModel ep)
         {
-            string msg = "";
+            string message = "", status = "";
 
             string test = ep.Name;
 
             try
             {
-                if (_db.ElectionPositions.Any(o => o.Name == ep.Name))
+                if (_db.ElectionPositions.Any(o => o.Name == ep.Name && o.Name != ep.Name))
                 {
-                    msg = "A position with similar name exists";
+                    message = "A position with similar name exists";
+                    status = "900";
+                }
+                else if (_db.ElectionPositions.Any(o => o.Sequence == ep.Sequence && o.PositionId != ep.PositionId))
+                {
+                    message = "A position with similar sequence exists";
+                    status = "900";
                 }
                 else
                 {
@@ -116,9 +237,12 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                     if(position != null)
                     {
                         position.Name = ep.Name;
+                        position.ElectionId = ep.ElectionId;
+                        position.Sequence = ep.Sequence;
                         _db.SaveChanges();
 
-                        msg = "Position updated successfully";
+                        message = "Position updated successfully";
+                        status = "000";
                     }
                 }
 
@@ -126,14 +250,14 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             }
             catch (Exception es)
             {
-                msg = es.Message;
+                message = es.Message;
             }
 
             var _RequestResponse = new Models.RequestResponse
             {
-                Message = msg,
+                Message = message,
 
-                Status = "000"
+                Status = status
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);

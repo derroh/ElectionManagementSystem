@@ -10,27 +10,27 @@ jQuery(function ($) {
 	//electral position
 	
 
-	$.ajax({
-		url: '/Admin/Elections/ListElections', 
+	//$.ajax({
+	//	url: '/Admin/Elections/ListElections', 
 
-		type: "POST",
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (response) {
-			if (response != null) {
+	//	type: "POST",
+	//	dataType: "json",
+	//	contentType: "application/json; charset=utf-8",
+	//	success: function (response) {
+	//		if (response != null) {
 
-				var data = $.parseJSON(response);
+	//			var data = $.parseJSON(response);
 
-				$.each(data, function (i, item) {
-					$("#ElectionId").append($('<option></option>').attr("value", item.ElectionId).text(item.Name));
-				});
+	//			$.each(data, function (i, item) {
+	//				$("#ElectionId").append($('<option></option>').attr("value", item.ElectionId).text(item.Name));
+	//			});
 
-			}
-		},
-		error: function (e) {
-			console.log(e.responseText);
-		}
-	});
+	//		}
+	//	},
+	//	error: function (e) {
+	//		console.log(e.responseText);
+	//	}
+	//});
 
 	$('#electralpositionform').validate({
 		errorElement: 'div',
@@ -38,22 +38,26 @@ jQuery(function ($) {
 		focusInvalid: false,
 		ignore: "",
 		rules: {
-			name: {
+			Name: {
 				required: true
 			},
 			ElectionId: {
 				required: true
 			},
 			Sequence: {
-				required: true
+				required: true,
+				digits: true
             }
 		},
 
 		messages: {
 
-			name: "Please specify the electral position name",
+			Name: "Please specify the electral position name",
 			ElectionId: "Please select the election",
-			Sequence: "Please select position on the voters window"
+			Sequence: {
+				digits: "Sequence can only be an integer value",
+				required: "Please specify the squence as to appear on the voter's window"
+			}
 		},
 
 
@@ -101,7 +105,7 @@ jQuery(function ($) {
 			//to get alert popup  	
 
 			jQuery.ajax({
-				url: './CreatePosition',
+				url: '/Positions/CreatePosition',
 				type: "POST",
 				data: valdata,
 				dataType: "json",
@@ -145,7 +149,7 @@ jQuery(function ($) {
 			var valdata = $("#electralpositionform").serialize();
 
 			jQuery.ajax({
-				url: '../UpdatePosition',
+				url: '/Positions/UpdatePosition',
 				type: "POST",
 				data: valdata,
 				dataType: "json",
@@ -159,17 +163,25 @@ jQuery(function ($) {
 
 						//console.log(data.Message);
 
-						bootbox.dialog({
-							message: data.Message,
-							buttons: {
-								"success": {
-									"label": "OK",
-									"className": "btn-sm btn-primary"
-								}								
-							}
-						});
+						if (data.Status == "000") {
+							$.gritter.add({
+								title: 'Delete Notification',
+								text: data.Message,
+								class_name: 'gritter-info gritter-center'
+							});
+						} else {
+							$.gritter.add({
+								title: 'Delete Notification',
+								text: data.Message,
+								class_name: 'gritter-error gritter-center'
+							});
+						}
 
-						window.location.href = '../Index';
+						//redirect after 2 seconds
+						window.setTimeout(function () {
+							window.location.href = '../Index';
+						}, 2000);
+						
 					}
 				},
 				error: function (e) {
@@ -232,6 +244,11 @@ jQuery(function ($) {
 										class_name: 'gritter-error gritter-center'
 									});
 								}
+
+								//reload after 2 seconds
+								window.setTimeout(function () {
+									location.reload(true);
+								}, 2000);
 							}
 						}
 					});

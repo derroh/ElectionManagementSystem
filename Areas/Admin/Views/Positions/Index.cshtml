@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ElectionManagementSystem.ElectionPosition>
+﻿@model IEnumerable< ElectionManagementSystem.Areas.Admin.ViewModels.ElectionPositionListViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
@@ -16,6 +16,7 @@
                                 Position Id
                             </th>
                             <th>Position Name</th>
+                            <th>Sequence on Ballot</th>
 
                             <th></th>
                         </tr>
@@ -33,11 +34,14 @@
                                 <td>
                                     @position.Name
                                 </td>
+                                <td>
+                                    @position.Sequence
+                                </td>
 
 
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <a class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                        <a href="@Url.Action("ViewPosition", "Positions", new { id = position.PositionId })" class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                         </a>
 
@@ -45,7 +49,7 @@
                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                         </a>
 
-                                        <a class="btn btn-xs btn-danger tooltip-errordeleteposition" data-docno="@position.PositionId" data-recordname="@position.Name" data-rel="tooltip" title="Delete">
+                                        <a class="btn btn-xs btn-danger tooltip-error deleteposition" data-docno="@position.PositionId" data-recordname="@position.Name" data-rel="tooltip" title="Delete">
                                             <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
                                         </a>
                                     </div>
@@ -58,7 +62,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                    <a href="@Url.Action("ViewPosition", "Positions", new { id = position.PositionId })" class="tooltip-info" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>

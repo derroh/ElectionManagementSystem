@@ -1,7 +1,8 @@
-﻿@model ElectionManagementSystem.Areas.Admin.ViewModels.ElectionPositionViewModel
+﻿
+@model ElectionManagementSystem.Areas.Admin.ViewModels.ElectionPositionViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "View";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
 }
 
@@ -11,7 +12,7 @@
 
         <div class="widget-box">
             <div class="widget-header widget-header-blue widget-header-flat">
-                <h4 class="widget-title lighter">New Item Wizard</h4>
+                <h4 class="widget-title lighter">@Model.Name</h4>
             </div>
 
             <div class="widget-body">
@@ -35,7 +36,7 @@
                                             @Html.DropDownListFor(m => m.ElectionId,
                                                                 new SelectList(ViewBag.Elections, "ElectionId", "Name", Model.ElectionId),
                                                                 "Select election",
-                                                                new { @class = "select2", @data_placeholder = "Click to Choose..." })
+                                                                new { @class = "select2", @data_placeholder = "Click to Choose...", @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.ElectionId, "", new { @class = "text-danger  " })
                                     </div>
@@ -46,7 +47,7 @@
 
                                     <div class="col-xs-12 col-sm-9">
                                         <div class="clearfix">
-                                            @Html.TextBoxFor(m => m.Name, new { @class = "col-xs-12 col-sm-5", @Value = Model.Name })
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "col-xs-12 col-sm-5", @Value = Model.Name, @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                                     </div>
@@ -59,7 +60,7 @@
 
                                     <div class="col-xs-12 col-sm-9">
                                         <div class="clearfix">
-                                            @Html.TextBoxFor(m => m.Sequence, new { @class = "col-xs-12 col-sm-5", @Value = Model.Sequence })
+                                            @Html.TextBoxFor(m => m.Sequence, new { @class = "col-xs-12 col-sm-5", @Value = Model.Sequence, @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.Sequence, "", new { @class = "text-danger" })
                                     </div>
@@ -68,16 +69,16 @@
 
                                 @Html.HiddenFor(m => m.PositionId)
                             }
-                      
+
                         </div>
                     </div>
 
                     <hr />
                     <div class="wizard-actions center">
-                        <button class="btn btn-success btn-next" id="UpdateElectralposition">
+                        @*<button class="btn btn-success btn-next" id="UpdateElectralposition">
                             Save
                             <i class="ace-icon fa fa-floppy-o  icon-on-right"></i>
-                        </button>
+                        </button>*@
                     </div>
                 </div><!-- /.widget-main -->
             </div><!-- /.widget-body -->
