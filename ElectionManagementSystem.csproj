@@ -216,6 +216,7 @@
     <Compile Include="Areas\Admin\ViewModels\CandidateViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ElectionPositionListViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ElectionPositionViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionViewModel.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Student\Controllers\VoteController.cs" />
@@ -482,6 +483,8 @@
     </Content>
     <Content Include="Areas\Admin\Views\Candidates\Candidate.cshtml" />
     <Content Include="Areas\Admin\Views\Positions\ViewPosition.cshtml" />
+    <Content Include="Areas\Admin\Views\Elections\ViewElection.cshtml" />
+    <Content Include="Areas\Admin\Views\Elections\Design.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -586,7 +586,7 @@ jQuery(function ($) {
 			//to get alert popup  	
 
 			jQuery.ajax({
-				url: './CreateElection',
+				url: '/Elections/CreateElection',
 				type: "POST",
 				data: valdata,
 				dataType: "json",
@@ -618,6 +618,48 @@ jQuery(function ($) {
 
 		event.preventDefault();
 	});
+
+	$("#UpdateElection").click(function (event) {
+
+		if ($('#electionform').valid()) {
+			//Serialize the form datas.  
+			var valdata = $("#electionform").serialize();
+			//to get alert popup  	
+
+			jQuery.ajax({
+				url: '/Elections/UpdateElection',
+				type: "POST",
+				data: valdata,
+				dataType: "json",
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				success: function (response) {
+					if (response != null) {
+						//console.log(JSON.stringify(response)); //it comes out to be string 
+
+						//we need to parse it to JSON
+						var data = $.parseJSON(response);
+
+						//console.log(data.Message);
+						bootbox.dialog({
+							message: data.Message,
+							buttons: {
+								"success": {
+									"label": "OK",
+									"className": "btn-sm btn-primary"
+								}
+							}
+						});
+					}
+				},
+				error: function (e) {
+					console.log(e.responseText);
+				}
+			});
+		}
+
+		event.preventDefault();
+	});
+
 
 	$("#elections-table").on("click", ".deleteelection", function (e) {
 		e.preventDefault();

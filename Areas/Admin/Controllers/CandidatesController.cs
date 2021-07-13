@@ -69,6 +69,10 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         {
             var elections = _db.Elections.ToList();
             var positionlist = _db.ElectionPositions.ToList();
+
+            //
+            var notFoundItems = _db.Students.Where(c => !_db.ElectionCandidates.Any(x => x.StudentId == c.StudentId)).ToList();
+
             var studentlist = _db.Students.ToList();
 
             ViewBag.Elections = elections;

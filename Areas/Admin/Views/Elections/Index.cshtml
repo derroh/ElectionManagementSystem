@@ -46,12 +46,16 @@
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
 
-                                        <a class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                        <a href="@Url.Action("ViewElection", "Elections", new { id = election.ElectionId })" class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                         </a>
 
                                         <a href="@Url.Action("Edit", "Elections", new { id = election.ElectionId })" class="btn btn-xs btn-success tooltip-success" data-rel="tooltip" title="Vote">
                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </a>
+
+                                        <a href="@Url.Action("Design", "Elections", new { id = election.ElectionId })" class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                            <i class="ace-icon fa fa-check-square-o bigger-120"></i>
                                         </a>
 
                                         <a class="btn btn-xs btn-danger tooltip-error deleteelection" data-docno="@election.ElectionId" data-recordname="@election.Name" data-rel="tooltip" title="Delete">
@@ -67,7 +71,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                    <a href="@Url.Action("ViewElection", "Elections", new { id = election.ElectionId })" class="tooltip-info" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -75,9 +79,17 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="@Url.Action("CastVote", "Vote", new { id = election.ElectionId })" class="tooltip-success" data-rel="tooltip" title="Vote">
+                                                    <a href="@Url.Action("Edit", "Vote", new { id = election.ElectionId })" class="tooltip-success" data-rel="tooltip" title="Vote">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="@Url.Action("Design", "Vote", new { id = election.ElectionId })" class="tooltip-success" data-rel="tooltip" title="Vote">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-check-square-o bigger-120"></i>
                                                         </span>
                                                     </a>
                                                 </li>

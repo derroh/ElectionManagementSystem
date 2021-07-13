@@ -18,5 +18,7 @@ namespace ElectionManagementSystem
         public string PositionId { get; set; }
         public string StudentId { get; set; }
         public string ElectionId { get; set; }
+    
+        public virtual Student Student { get; set; }
     }
 }

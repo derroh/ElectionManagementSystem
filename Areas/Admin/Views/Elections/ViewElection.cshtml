@@ -1,6 +1,7 @@
-﻿@model ElectionManagementSystem.Areas.Admin.ViewModels.ElectionViewModel
+﻿
+@model ElectionManagementSystem.Areas.Admin.ViewModels.ElectionViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "View Election";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
 }
 
@@ -10,7 +11,7 @@
 
         <div class="widget-box">
             <div class="widget-header widget-header-blue widget-header-flat">
-                <h4 class="widget-title lighter">New Election Wizard</h4>
+                <h4 class="widget-title lighter">View Election Wizard</h4>
             </div>
 
             <div class="widget-body">
@@ -19,7 +20,8 @@
 
                         <div class="step-content pos-rel">
                             <h3 class="lighter block green">Enter the following information</h3>
-                            @using (Html.BeginForm("CreateElection", "Elections", FormMethod.Post, new { @id = "electionform", @class = "form-horizontal" }))
+
+                            @using (Html.BeginForm("UpdateElection", "Elections", FormMethod.Post, new { @id = "electionform", @class = "form-horizontal" }))
                             {
                                 @Html.AntiForgeryToken()
 
@@ -30,7 +32,7 @@
 
                                     <div class="col-xs-12 col-sm-9">
                                         <div class="clearfix">
-                                            @Html.TextBoxFor(m => m.Name, new { @class = "col-xs-12 col-sm-5" })
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "col-xs-12 col-sm-5", @Value = Model.Name, @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                                     </div>
@@ -47,8 +49,8 @@
                                             <span class="input-group-addon">
                                                 <i class="ace-icon fa fa-clock-o bigger-110"></i>
                                             </span>
-                                            
-                                            @Html.TextBoxFor(m => m.StartDate, new { @class = "col-xs-12 col-sm-5" })
+
+                                            @Html.TextBoxFor(m => m.StartDate, new { @class = "col-xs-12 col-sm-5", @Value = Model.StartDate, @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
                                     </div>
@@ -64,24 +66,24 @@
                                             <span class="input-group-addon">
                                                 <i class="ace-icon fa fa-clock-o bigger-110"></i>
                                             </span>
-                                           
-                                            @Html.TextBoxFor(m => m.EndDate, new { @class = "col-xs-12 col-sm-5" })
+
+                                            @Html.TextBoxFor(m => m.EndDate, new { @class = "col-xs-12 col-sm-5", @Value = Model.EndDate, @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
-
+                                @Html.HiddenFor(m => m.ElectionId)
                             }
                         </div>
                     </div>
 
                     <hr />
                     <div class="wizard-actions center">
-                        <button class="btn btn-success btn-next" id="SaveElection">
+                        @*<button class="btn btn-success btn-next" id="UpdateElection">
                             Save
                             <i class="ace-icon fa fa-floppy-o  icon-on-right"></i>
-                        </button>
+                        </button>*@
                     </div>
                 </div><!-- /.widget-main -->
             </div><!-- /.widget-body -->

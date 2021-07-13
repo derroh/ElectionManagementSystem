@@ -18,5 +18,6 @@ namespace ElectionManagementSystem
         public string Name { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<int> Status { get; set; }
     }
 }

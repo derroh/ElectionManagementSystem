@@ -8,6 +8,8 @@ using System.Web.Mvc;
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
     using ElectionManagementSystem.Models;
+    using ElectionManagementSystem.Areas.Admin.ViewModels;
+    using System.Dynamic;
 
     [Authorize]
     public class ElectionsController : Controller
@@ -24,7 +26,9 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult CreateElection(Election e)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateElection(ElectionViewModel e)
         {
             string msg = "", DocumentNo = "";
 
@@ -47,8 +51,9 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                 {
                     ElectionId = DocumentNo,
                     Name = e.Name,
-                    StartDate = e.StartDate,
-                    EndDate = e.EndDate
+                    StartDate = Convert.ToDateTime(e.StartDate),
+                    EndDate = Convert.ToDateTime(e.EndDate),
+                    Status = 0
 
                 };
 
@@ -81,29 +86,54 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
         public ActionResult Edit(string Id)
         {
-            return View();
-        }
-        public JsonResult ListElections()
-        {
-            List<Election> electionlist = new List<Election>();
-
-            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            var election = _db.Elections.Where(x => x.ElectionId == Id).SingleOrDefault();
+            var ElectionViewModel = new ElectionViewModel
             {
-                var elections = dbEntities.Elections.ToList();
+                Name = election.Name,
+                ElectionId = election.ElectionId,
+                StartDate = election.StartDate.ToString(),
+                EndDate = election.EndDate.ToString()
 
-                foreach (var election in elections)
+            };
+            return View(ElectionViewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateElection(ElectionViewModel ep)
+        {
+            string message = "", status = "";
+
+            try
+            {
+                var election = _db.Elections.Where(x => x.ElectionId == ep.ElectionId).SingleOrDefault();
+
+                if (election != null)
                 {
-                    electionlist.Add(new ElectionManagementSystem.Election
-                    {
-                        Name = election.Name,
-                        ElectionId = election.ElectionId,
-                        EndDate = election.EndDate,
-                        StartDate = election.StartDate
+                    election.Name = ep.Name;
+                    election.ElectionId = ep.ElectionId;
+                    election.StartDate = Convert.ToDateTime(ep.StartDate);
+                    election.EndDate = Convert.ToDateTime(ep.EndDate);
+                    _db.SaveChanges();
 
-                    });
+                    message = "Election updated successfully";
+                    status = "000";
                 }
+
+
             }
-            return Json(JsonConvert.SerializeObject(electionlist), JsonRequestBehavior.AllowGet);
+            catch (Exception es)
+            {
+                message = es.Message;
+            }
+
+            var _RequestResponse = new RequestResponse
+            {
+                Message = message,
+
+                Status = status
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         public ActionResult Delete(string DocumentNo)
         {
@@ -141,6 +171,79 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewElection(string Id)
+        {
+            var election = _db.Elections.Where(x => x.ElectionId == Id).SingleOrDefault();
+            var ElectionViewModel = new ElectionViewModel
+            {
+                Name = election.Name,
+                ElectionId = election.ElectionId,
+                StartDate = election.StartDate.ToString(),
+                EndDate = election.EndDate.ToString()
+
+            };
+            return View(ElectionViewModel);
+        }
+        public ActionResult Design(string Id)
+        {
+            List<Models.PositionsOnBallot> pob = new List<Models.PositionsOnBallot>();
+            List<Models.Candidates> candi = new List<Models.Candidates>();
+
+            var election = _db.Elections.Where(e => e.ElectionId == Id).SingleOrDefault();
+
+            if (election != null)
+            {
+                int items = _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList().Count;
+
+                foreach (var item in _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList())
+                {
+                    foreach (var candidate in _db.ElectionCandidates.Where(e => e.ElectionId == election.ElectionId && e.PositionId == item.PositionId).ToList())
+                    {
+                        if (candidate.PositionId == item.PositionId)
+                        {
+                            candi.Add(new Models.Candidates
+                            {
+                                CandidateID = candidate.CandidateId,
+                                CandidateName = GetCandidateName(candidate.StudentId), //change this, add Foreign key rshps
+                                CandidateStudentId = candidate.StudentId,
+                                ElectralPositionId = candidate.PositionId
+                            });
+
+                            pob.Add(new Models.PositionsOnBallot
+                            {
+                                Candidates = candi.ToArray(),
+                                PositionId = item.PositionId,
+                                PositionSequence = item.Sequence,
+                                PositionName = item.Name
+                            });
+                        }
+                    }
+                }
+            }
+
+
+
+            Models.Vote v = new Models.Vote
+            {
+                ElectionID = election.ElectionId,
+                StartDate = election.StartDate.ToString(),
+                EndDate = election.EndDate.ToString(),
+                Positions = pob.Count(),
+                PositionsOnBallot = pob.ToArray()
+            };
+
+            dynamic mymodel = new ExpandoObject();
+            mymodel.Vote = v;
+            mymodel.CandidatesCount = candi.Count;
+            mymodel.VoterTabs = pob.Count + 1;
+            return View(mymodel);
+        }
+        private string GetCandidateName(string studentId)
+        {
+            var check = _db.Students.FirstOrDefault(s => s.StudentId == studentId);
+
+            return check.Name;
         }
     }
 }

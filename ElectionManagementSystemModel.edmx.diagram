@@ -13,6 +13,7 @@
         <EntityTypeShape EntityType="ElectionManagementModel.Setting" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ElectionManagementModel.Student" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ElectionManagementModel.User" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="ElectionManagementModel.FK_ElectionCandidates_ToStudents" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

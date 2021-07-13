@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ElectionManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ElectionManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ballots">
           <Key>
             <PropertyRef Name="BallotId" />
@@ -39,9 +39,10 @@
             <PropertyRef Name="ElectionId" />
           </Key>
           <Property Name="ElectionId" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="10" />
-          <Property Name="StartDate" Type="date" />
-          <Property Name="EndDate" Type="date" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="NumberSeries">
           <Key>
@@ -101,6 +102,18 @@
           <Property Name="Role" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="ResetPasswordCode" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK_ElectionCandidates_ToStudents">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="ElectionCandidates" Type="Self.ElectionCandidates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="ElectionCandidates">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ElectionManagementModelStoreContainer">
           <EntitySet Name="Ballots" EntityType="Self.Ballots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ElectionCandidates" EntityType="Self.ElectionCandidates" Schema="dbo" store:Type="Tables" />
@@ -110,9 +123,12 @@
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ElectionCandidates_ToStudents" Association="Self.FK_ElectionCandidates_ToStudents">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="ElectionCandidates" EntitySet="ElectionCandidates" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ElectionManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -135,6 +151,7 @@
           <Property Name="PositionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StudentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ElectionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="ElectionManagementModel.FK_ElectionCandidates_ToStudents" FromRole="ElectionCandidate" ToRole="Student" />
         </EntityType>
         <EntityType Name="ElectionPosition">
           <Key>
@@ -150,9 +167,10 @@
             <PropertyRef Name="ElectionId" />
           </Key>
           <Property Name="ElectionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="NumberSery">
           <Key>
@@ -197,6 +215,7 @@
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="YearOfStudy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ElectionCandidates" Relationship="ElectionManagementModel.FK_ElectionCandidates_ToStudents" FromRole="Student" ToRole="ElectionCandidate" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -221,7 +240,23 @@
           <EntitySet Name="Settings" EntityType="Self.Setting" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_ElectionCandidates_ToStudents" Association="ElectionManagementModel.FK_ElectionCandidates_ToStudents">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="ElectionCandidate" EntitySet="ElectionCandidates" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_ElectionCandidates_ToStudents">
+          <End Type="ElectionManagementModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="ElectionManagementModel.ElectionCandidate" Role="ElectionCandidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="ElectionCandidate">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -263,6 +298,7 @@
           <EntitySetMapping Name="Elections">
             <EntityTypeMapping TypeName="ElectionManagementModel.Election">
               <MappingFragment StoreEntitySet="Elections">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ElectionId" ColumnName="ElectionId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />

@@ -1,7 +1,7 @@
 ﻿@model dynamic
 
 @{
-    ViewBag.Title = "CastVote";
+    ViewBag.Title = "Design Ballot";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
 }
 
@@ -19,15 +19,15 @@
                     <div id="fuelux-wizard-container">
                         <div>
                             <ul class="steps">
-                                @foreach(ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
+                                @foreach (ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
                                 {
-                                    
+
                                     <li data-step="@position.PositionSequence" class="active">
                                         <span class="step">@position.PositionSequence</span>
                                         <span class="title">@position.PositionName</span>
                                     </li>
                                 }
-                                
+
 
                                 <li data-step="@Model.VoterTabs">
                                     <span class="step">@Model.VoterTabs</span>
@@ -42,42 +42,42 @@
                             <form class="form-horizontal" id="ballot-form" method="get">
                                 @foreach (ElectionManagementSystem.Models.PositionsOnBallot position in Model.Vote.PositionsOnBallot)
                                 {
-                                <div class="step-pane active" data-step="@position.PositionSequence">
+                                    <div class="step-pane active" data-step="@position.PositionSequence">
 
-                                    <div class="center">
-                                        <h3 class="blue lighter">Choose a contestant from the options below</h3>
-                                    </div>
+                                        <div class="center">
+                                            <h3 class="blue lighter">Choose a contestant from the options below</h3>
+                                        </div>
 
-                                    <hr />
+                                        <hr />
 
-                                    @foreach (ElectionManagementSystem.Models.Candidates candidate in position.Candidates)
-                                    {
-
-
-                                        if (position.PositionId == candidate.ElectralPositionId)
+                                        @foreach (ElectionManagementSystem.Models.Candidates candidate in position.Candidates)
                                         {
-                                            <div class="space-2"></div>
 
-                                            <div class="form-group">
-                                                <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
 
-                                                <div class="col-xs-12 col-sm-9">
+                                            if (position.PositionId == candidate.ElectralPositionId)
+                                            {
+                                                <div class="space-2"></div>
 
-                                                    <div>
-                                                        <label class="line-height-1 blue">
-                                                            <input name="@position.PositionId" value="@candidate.CandidateID" type="radio" class="" />
-                                                            <span class="lbl"> @candidate.CandidateName</span>
-                                                        </label>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
+
+                                                    <div class="col-xs-12 col-sm-9">
+
+                                                        <div>
+                                                            <label class="line-height-1 blue">
+                                                                <input name="@position.PositionId" value="@candidate.CandidateID" type="radio" class="" />
+                                                                <span class="lbl"> @candidate.CandidateName</span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="hr hr-dotted"></div>
+                                                <div class="hr hr-dotted"></div>
+                                            }
+
                                         }
 
-                                    }
-
-                                </div>
+                                    </div>
                                 }
                                 <div class="step-pane" data-step="@Model.VoterTabs">
                                     <div class="center">
