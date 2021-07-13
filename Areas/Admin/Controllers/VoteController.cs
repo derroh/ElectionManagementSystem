@@ -16,7 +16,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         // [Authorize]
         public ActionResult Index()
         {
-            return View(from elections in _db.Elections.Where(e => e.Status == 1).Take(10)
+            return View(from elections in _db.Elections.Where(e => e.Status == (int)ElectionStatus.Open).Take(10)
                         select elections);
         }
         public ActionResult CastVote(string Id)

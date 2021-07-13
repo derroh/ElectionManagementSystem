@@ -61,6 +61,9 @@
                                         <a class="btn btn-xs btn-danger tooltip-error deleteelection" data-docno="@election.ElectionId" data-recordname="@election.Name" data-rel="tooltip" title="Delete">
                                             <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
                                         </a>
+                                        <a class="btn btn-xs btn-success tooltip-success openelection" href="#" data-docno="@election.ElectionId">
+                                            <i class="ace-icon fa fa-paper-plane-o bigger-120"></i>
+                                        </a>
                                     </div>
 
                                     <div class="hidden-md hidden-lg">
@@ -98,6 +101,13 @@
                                                     <a href="#" class="tooltip-error deleteelection" data-docno="@election.ElectionId" data-recordname="@election.Name" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="tooltip-success openelection" data-docno="@election.ElectionId" data-rel="tooltip" title="Open">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-paper-plane-o bigger-120"></i>
                                                         </span>
                                                     </a>
                                                 </li>

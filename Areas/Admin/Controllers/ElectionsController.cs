@@ -10,6 +10,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
     using ElectionManagementSystem.Models;
     using ElectionManagementSystem.Areas.Admin.ViewModels;
     using System.Dynamic;
+    using ElectionManagementSystem;
 
     [Authorize]
     public class ElectionsController : Controller
@@ -53,7 +54,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                     Name = e.Name,
                     StartDate = Convert.ToDateTime(e.StartDate),
                     EndDate = Convert.ToDateTime(e.EndDate),
-                    Status = 0
+                    Status = (int)ElectionStatus.Created
 
                 };
 
@@ -239,11 +240,50 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             mymodel.VoterTabs = pob.Count + 1;
             return View(mymodel);
         }
+
+        public ActionResult Open(string ElectionId)
+        {
+            string status = "", message = "";
+
+            try
+            {
+                using (var db = new ElectionManagementSystemEntities())
+                {
+                    var election = db.Elections.Where(x => x.ElectionId == ElectionId).SingleOrDefault();
+
+                    if (election != null)
+                    {
+                        election.Status = (int)ElectionStatus.Open;
+                        db.SaveChanges();
+                        status = "000";
+                        message = "Open Success! for election " + election.Name;
+                    }
+                    else
+                    {
+                        status = "900";
+                        message = "Couldn't find election " + ElectionId;
+                    }
+                }
+            }
+            catch (Exception es)
+            {
+                message = es.Message;
+            }
+
+            var _RequestResponse = new RequestResponse
+            {
+                Status = status,
+                Message = message
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
         private string GetCandidateName(string studentId)
         {
             var check = _db.Students.FirstOrDefault(s => s.StudentId == studentId);
 
             return check.Name;
         }
+
     }
 }

@@ -720,6 +720,62 @@ jQuery(function ($) {
 			}
 		});
 	});
+	$("#elections-table").on("click", ".openelection", function (e) {
+		e.preventDefault();
+
+		var docno = $(this).attr('data-docno');
+
+		bootbox.confirm({
+			title: "<i class='fa fa-paper-plane'></i> Open election for voting?",
+			message: "Do you wish to open election " + docno + " for voting by students?",
+			buttons: {
+				confirm: {
+					label: 'Yes',
+					className: 'btn-success'
+				},
+				cancel: {
+					label: 'No',
+					className: 'btn-danger'
+				}
+			},
+			callback: function (result) {
+
+				if (result == true) {
+
+					jQuery.ajax({
+						url: '/Elections/Open',
+						type: "POST",
+						data: '{ElectionId:"' + docno + '" }',
+						dataType: "json",
+						contentType: "application/json; charset=utf-8",
+						success: function (response) {
+
+							if (response != null) {
+								//console.log(JSON.stringify(response)); //it comes out to be string 
+
+								//we need to parse it to JSON
+								var data = $.parseJSON(response);
+
+								if (data.Status == "000") {
+									$.gritter.add({
+										title: 'Approval Notification',
+										text: data.Message,
+										class_name: 'gritter-info gritter-center'
+									});
+								} else {
+									$.gritter.add({
+										title: 'Approval Notification',
+										text: data.Message,
+										class_name: 'gritter-error gritter-center'
+									});
+								}
+							}
+						}
+					});
+				}
+			}
+		});
+	});
 
 	///students
 

@@ -256,6 +256,7 @@
       <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmailFunctions.cs" />
+    <Compile Include="Enums\enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

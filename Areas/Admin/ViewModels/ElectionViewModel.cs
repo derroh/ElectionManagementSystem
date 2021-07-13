@@ -11,5 +11,6 @@ namespace ElectionManagementSystem.Areas.Admin.ViewModels
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string ElectionId { get; set; }
+        public ElectionStatus ElectionStatus { get; set; }
     }
 }

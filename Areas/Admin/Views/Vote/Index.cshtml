@@ -1,6 +1,7 @@
 ﻿
 @model IEnumerable<ElectionManagementSystem.Election>
 
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
@@ -20,7 +21,7 @@
                             <th>Election Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -29,48 +30,50 @@
 
                         @foreach (var election in Model)
                         {
-                            <tr>
-                                <td class="center">
-                                    @election.ElectionId
-                                </td>
+                        <tr>
+                            <td class="center">
+                                @election.ElectionId
+                            </td>
 
-                                <td>
-                                    @election.Name
-                                </td>
+                            <td>
+                                @election.Name
+                            </td>
 
-                                <td>
-                                    @election.StartDate
-                                </td>
-                                <td class="center">@election.EndDate</td>
+                            <td>
+                                @election.StartDate
+                            </td>
+                            <td class="center">@election.EndDate</td>
+                            <td class="center">
+                                @*@(ElectionManagementSystem.Enums.ElectionStatus)election.Status*@
+                            </td>
 
+                            <td>
+                                <div class="hidden-sm hidden-xs btn-group">
 
-                                <td>
-                                    <div class="hidden-sm hidden-xs btn-group">
+                                    <a href="@Url.Action("CastVote", "Vote", new { id = election.ElectionId })" class="btn btn-xs btn-success tooltip-success" data-rel="tooltip" title="Vote">
+                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                    </a>
+                                </div>
 
-                                        <a href="@Url.Action("CastVote", "Vote", new { id = election.ElectionId })" class="btn btn-xs btn-success tooltip-success" data-rel="tooltip" title="Vote">
-                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                        </a>
+                                <div class="hidden-md hidden-lg">
+                                    <div class="inline pos-rel">
+                                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                            <li>
+                                                <a href="@Url.Action("CastVote", "Vote", new { id = election.ElectionId })" class="tooltip-success" data-rel="tooltip" title="Vote">
+                                                    <span class="green">
+                                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-
-                                    <div class="hidden-md hidden-lg">
-                                        <div class="inline pos-rel">
-                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                                            </button>
-
-                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
-                                                    <a href="@Url.Action("CastVote", "Vote", new { id = election.ElectionId })" class="tooltip-success" data-rel="tooltip" title="Vote">
-                                                        <span class="green">
-                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         }
 
                     </tbody>

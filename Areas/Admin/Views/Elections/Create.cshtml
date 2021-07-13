@@ -47,7 +47,7 @@
                                             <span class="input-group-addon">
                                                 <i class="ace-icon fa fa-clock-o bigger-110"></i>
                                             </span>
-                                            
+
                                             @Html.TextBoxFor(m => m.StartDate, new { @class = "col-xs-12 col-sm-5" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
@@ -64,13 +64,28 @@
                                             <span class="input-group-addon">
                                                 <i class="ace-icon fa fa-clock-o bigger-110"></i>
                                             </span>
-                                           
+
                                             @Html.TextBoxFor(m => m.EndDate, new { @class = "col-xs-12 col-sm-5" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Election Status:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+
+                                        <div class="clearfix">
+                                            @Html.EnumDropDownListFor(
+                                                x => x.ElectionStatus,
+                                                "Choose status",
+                                                new { @class = "select2", @data_placeholder = "Click to Choose..." })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.ElectionStatus, "", new { @class = "text-danger  " })
+                                    </div>
+                                </div>
 
                             }
                         </div>
