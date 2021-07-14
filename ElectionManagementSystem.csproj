@@ -490,6 +490,8 @@
     <Content Include="Areas\Admin\Views\Positions\ViewPosition.cshtml" />
     <Content Include="Areas\Admin\Views\Elections\ViewElection.cshtml" />
     <Content Include="Areas\Admin\Views\Elections\Design.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\ViewStudent.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

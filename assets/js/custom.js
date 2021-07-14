@@ -2,7 +2,7 @@ jQuery(function ($) {
 
 	$validation = true;
 
-	$('.select2').css('width', '200px').select2({ allowClear: true })
+	$('.select2').css('width', '400px').select2({ allowClear: true })
 		.on('change', function () {
 			$(this).closest('form').validate().element($(this));
 		});
@@ -884,6 +884,46 @@ jQuery(function ($) {
 
 			jQuery.ajax({
 				url: '/Admin/Students/CreateStudent',
+				type: "POST",
+				data: valdata,
+				dataType: "json",
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				success: function (response) {
+					if (response != null) {
+						//console.log(JSON.stringify(response)); //it comes out to be string 
+
+						//we need to parse it to JSON
+						var data = $.parseJSON(response);
+
+						//console.log(data.Message);
+						bootbox.dialog({
+							message: data.Message,
+							buttons: {
+								"success": {
+									"label": "OK",
+									"className": "btn-sm btn-primary"
+								}
+							}
+						});
+					}
+				},
+				error: function (e) {
+					console.log(e.responseText);
+				}
+			});
+		}
+
+		event.preventDefault();
+	});
+	$("#UpdateStudent").click(function (event) {
+
+		if ($('#studentform').valid()) {
+			//Serialize the form datas.  
+			var valdata = $("#studentform").serialize();
+			//to get alert popup  	
+
+			jQuery.ajax({
+				url: '/Admin/Students/UpdateStudent',
 				type: "POST",
 				data: valdata,
 				dataType: "json",

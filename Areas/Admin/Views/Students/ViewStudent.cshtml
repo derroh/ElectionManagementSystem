@@ -1,0 +1,215 @@
+﻿@model ElectionManagementSystem.Areas.Admin.ViewModels.StudentViewModel
+
+
+@{
+    ViewBag.Title = "View student";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+
+        <div class="widget-box">
+            <div class="widget-header widget-header-blue widget-header-flat">
+                <h4 class="widget-title lighter">New Student Wizard</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div id="fuelux-wizard-container">
+
+                        <div class="step-content pos-rel">
+                            <h3 class="lighter block green">Enter the following information</h3>
+
+                            @using (Html.BeginForm("CreateStudent", "Students", FormMethod.Post, new { @id = "studentform", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">First Name:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "col-xs-12 col-sm-5", @Value = Model.FirstName, @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">Last Name:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "col-xs-12 col-sm-5", @Value = Model.LastName, @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Name">Name:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "col-xs-12 col-sm-8", @Value = Model.Name, @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Email">Email Address:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "col-xs-12 col-sm-6", @Value = Model.Email, @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="ace-icon fa fa-phone"></i>
+
+                                            </span>
+
+                                            @Html.TextBoxFor(m => m.Phone, new { @class = "col-xs-12 col-sm-5", @Value = Model.Phone, @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+
+
+                                <div class="hr hr-dotted"></div>
+
+
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right">Gender</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div>
+                                            <label class="line-height-1 blue">
+                                                @Html.RadioButtonFor(m => m.Gender, "Male", Model.Gender == "Male" ? new { Checked = "checked", @class = "ace", @disabled = "disabled" } : new { Checked = "", @class = "ace", @disabled = "disabled" })
+                                                <span class="lbl"> Male</span>
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <label class="line-height-1 blue">
+                                                @Html.RadioButtonFor(m => m.Gender, "Female", Model.Gender == "Female" ? new { Checked = "checked", @class = "ace", @disabled = "disabled" } : new { Checked = "", @class = "ace", @disabled = "disabled" })
+                                                <span class="lbl"> Female</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Year of study</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.EnumDropDownListFor(
+                                                 x => x.YearOfStudy,
+                                                ((int)Model.YearOfStudy).ToString(),
+                                                 new { @class = "select2", @data_placeholder = "Click to Choose...", @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.YearOfStudy, "", new { @class = "text-danger  " })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Faculty</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+
+                                            @Html.DropDownListFor(m => m.Faculty,
+                                                                new SelectList(ViewBag.Faculties, "Code", "Description", Model.Faculty),
+                                                                "Select Faculty",
+                                                                new { @class = "select2", @data_placeholder = "Click to Choose...", @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Faculty, "", new { @class = "text-danger  " })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="space-2"></div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">Password:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "col-xs-12 col-sm-4", @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="space-2"></div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2">Confirm Password:</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "col-xs-12 col-sm-4", @disabled = "disabled" })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="hr hr-dotted"></div>
+
+                                <div class="space-8"></div>
+
+                                @Html.HiddenFor(m => m.StudentId)
+
+                            }
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="wizard-actions center">
+                        <button class="btn btn-success btn-next" id="UpdateStudent">
+                            Save
+                            <i class="ace-icon fa fa-floppy-o  icon-on-right"></i>
+                        </button>
+                    </div>
+                </div><!-- /.widget-main -->
+            </div><!-- /.widget-body -->
+        </div>
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

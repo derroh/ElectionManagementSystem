@@ -27,6 +27,32 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             ViewBag.Faculties = Facultieslist;
             return View();
         }
+        public ActionResult Edit(string Id)
+        {
+            var Facultieslist = _db.Faculties.Take(10).ToList();
+            ViewBag.Faculties = Facultieslist;
+
+            ///fetch student by their ID
+            ///
+            var stud = _db.Students.Where(s => s.StudentId == Id).FirstOrDefault();
+
+            var student = new ViewModels.StudentViewModel { Name = stud.Name, LastName = stud.LastName, FirstName = stud.FirstName, Phone = stud.Phone, YearOfStudy = (YearOfStudy)(Convert.ToInt32(stud.YearOfStudy)), Email = stud.Email,  Faculty = stud.Faculty, Gender = stud.Gender.Trim(), StudentId = stud .StudentId};
+
+            return View(student);
+        }
+        public ActionResult ViewStudent(string Id)
+        {
+            var Facultieslist = _db.Faculties.Take(10).ToList();
+            ViewBag.Faculties = Facultieslist;
+
+            ///fetch student by their ID
+            ///
+            var stud = _db.Students.Where(s => s.StudentId == Id).FirstOrDefault();
+
+            var student = new ViewModels.StudentViewModel { Name = stud.Name, LastName = stud.LastName, FirstName = stud.FirstName, Phone = stud.Phone, YearOfStudy = (YearOfStudy)(Convert.ToInt32(stud.YearOfStudy)), Email = stud.Email, Faculty = stud.Faculty, Gender = stud.Gender.Trim(), StudentId = stud.StudentId };
+
+            return View(student);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateStudent(StudentViewModel student)
@@ -84,6 +110,51 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                 Message = msg,
 
                 Status = "000"
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateStudent(StudentViewModel student)
+        {
+            string message = "", status = "";
+
+            try
+            {
+                var studentrec = _db.Students.Where(s => s.StudentId == student.StudentId).SingleOrDefault();
+
+                if(studentrec != null)
+                {
+
+                    studentrec.Email = student.Email;
+                    studentrec.Faculty = student.Faculty;
+                    studentrec.FirstName = student.FirstName;
+                    studentrec.LastName = student.LastName;
+                    studentrec.Gender = student.Gender.Trim();
+                    studentrec.Name = student.Name;
+                    studentrec.Phone = student.Phone;
+                    studentrec.YearOfStudy = ((int)student.YearOfStudy).ToString();
+                    _db.SaveChanges();
+                    message = "Student updated successfully";
+                    status = "000";
+                }
+                else
+                {
+                    message = "Student not found";
+                    status = "900";
+                }
+            }
+            catch (Exception es)
+            {
+                message = es.Message;
+                status = "900";
+            }
+            var _RequestResponse = new Models.RequestResponse
+            {
+                Message = message,
+
+                Status = status
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);

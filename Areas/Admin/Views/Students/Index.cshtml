@@ -47,7 +47,7 @@
 
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <a class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                        <a href="@Url.Action("ViewStudent", "Students", new { id = student.StudentId })"  class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                         </a>
 
@@ -68,7 +68,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                    <a href="@Url.Action("ViewStudent", "Students", new { id = student.StudentId })"  class="tooltip-info" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
