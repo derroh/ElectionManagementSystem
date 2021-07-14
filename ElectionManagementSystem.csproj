@@ -217,6 +217,7 @@
     <Compile Include="Areas\Admin\ViewModels\ElectionPositionListViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ElectionPositionViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ElectionViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\StudentViewModel.cs" />
     <Compile Include="Areas\Student\Controllers\HomeController.cs" />
     <Compile Include="Areas\Student\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Student\Controllers\VoteController.cs" />
@@ -257,6 +258,9 @@
     </Compile>
     <Compile Include="EmailFunctions.cs" />
     <Compile Include="Enums\enums.cs" />
+    <Compile Include="Faculty.cs">
+      <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

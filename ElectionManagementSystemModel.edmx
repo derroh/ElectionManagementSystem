@@ -44,6 +44,13 @@
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Status" Type="int" />
         </EntityType>
+        <EntityType Name="Faculties">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="NumberSeries">
           <Key>
             <PropertyRef Name="Code" />
@@ -119,6 +126,7 @@
           <EntitySet Name="ElectionCandidates" EntityType="Self.ElectionCandidates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ElectionPositions" EntityType="Self.ElectionPositions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Elections" EntityType="Self.Elections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faculties" EntityType="Self.Faculties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NumberSeries" EntityType="Self.NumberSeries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
@@ -244,6 +252,7 @@
             <End Role="Student" EntitySet="Students" />
             <End Role="ElectionCandidate" EntitySet="ElectionCandidates" />
           </AssociationSet>
+          <EntitySet Name="Faculties" EntityType="ElectionManagementModel.Faculty" />
         </EntityContainer>
         <Association Name="FK_ElectionCandidates_ToStudents">
           <End Type="ElectionManagementModel.Student" Role="Student" Multiplicity="0..1" />
@@ -257,6 +266,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -365,6 +381,14 @@
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faculties">
+            <EntityTypeMapping TypeName="ElectionManagementModel.Faculty">
+              <MappingFragment StoreEntitySet="Faculties">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

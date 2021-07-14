@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
     using ElectionManagementSystem.Models;
+    using ElectionManagementSystem.Areas.Admin.ViewModels;
 
     [Authorize]
     public class StudentsController : Controller
@@ -22,10 +23,13 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         }
         public ActionResult Create()
         {
+            var Facultieslist = _db.Faculties.Take(10).ToList();
+            ViewBag.Faculties = Facultieslist;
             return View();
         }
         [HttpPost]
-        public ActionResult CreateStudent(ElectionManagementSystem.Student student)
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateStudent(StudentViewModel student)
         {
             string msg = "", DocumentNo = "";
 
@@ -55,7 +59,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                     Gender = student.Gender,
                     Name = student.Name,
                     Phone = student.Phone,
-                    YearOfStudy = student.YearOfStudy
+                    YearOfStudy =((int)student.YearOfStudy).ToString()
 
                 };
 

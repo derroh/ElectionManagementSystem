@@ -1,4 +1,5 @@
-﻿
+﻿@model ElectionManagementSystem.Areas.Admin.ViewModels.StudentViewModel
+
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
@@ -20,8 +21,11 @@
                         <div class="step-content pos-rel">
                             <h3 class="lighter block green">Enter the following information</h3>
 
-                            <form class="form-horizontal" id="studentform" method="get">
+                            @using (Html.BeginForm("CreateStudent", "Students", FormMethod.Post, new { @id = "studentform", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
 
+                                HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
 
                                 <div class="space-2"></div>
 
@@ -29,9 +33,10 @@
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">First Name:</label>
 
                                     <div class="col-xs-12 col-sm-9">
-                                        <div class="clearfix">
-                                            <input type="text" id="FirstName" name="FirstName" class="col-xs-12 col-sm-5" />
+                                        <div class="clearfix">                                            
+                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "col-xs-12 col-sm-5" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -39,8 +44,9 @@
 
                                     <div class="col-xs-12 col-sm-9">
                                         <div class="clearfix">
-                                            <input type="text" id="LastName" name="LastName" class="col-xs-12 col-sm-5" />
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "col-xs-12 col-sm-5" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -50,9 +56,10 @@
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Name">Name:</label>
 
                                     <div class="col-xs-12 col-sm-9">
-                                        <div class="clearfix">
-                                            <input type="text" id="Name" name="Name" class="col-xs-12 col-sm-8" />
+                                        <div class="clearfix">                                            
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "col-xs-12 col-sm-8" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -64,9 +71,10 @@
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Email">Email Address:</label>
 
                                     <div class="col-xs-12 col-sm-9">
-                                        <div class="clearfix">
-                                            <input type="email" name="Email" id="Email" class="col-xs-12 col-sm-6" />
+                                        <div class="clearfix">                                            
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "col-xs-12 col-sm-6" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -79,10 +87,12 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="ace-icon fa fa-phone"></i>
-                                            </span>
 
-                                            <input type="tel" id="phone" name="phone" />
+                                            </span>
+                                           
+                                            @Html.TextBoxFor(m => m.Phone, new { @class = "col-xs-12 col-sm-5" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -101,15 +111,15 @@
 
                                     <div class="col-xs-12 col-sm-9">
                                         <div>
-                                            <label class="line-height-1 blue">
-                                                <input name="Gender" value="Male" type="radio" class="ace" />
+                                            <label class="line-height-1 blue">                                                
+                                                @Html.RadioButtonFor(m => m.Gender, "Male", new { @id = "Male", @class = "ace" })
                                                 <span class="lbl"> Male</span>
                                             </label>
                                         </div>
 
                                         <div>
-                                            <label class="line-height-1 blue">
-                                                <input name="Gender" value="Female" type="radio" class="ace" />
+                                            <label class="line-height-1 blue">                                                
+                                                @Html.RadioButtonFor(m => m.Gender, "Female", new { @id = "Female", @class = "ace" })
                                                 <span class="lbl"> Female</span>
                                             </label>
                                         </div>
@@ -122,13 +132,13 @@
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Year of study</label>
 
                                     <div class="col-xs-12 col-sm-9">
-                                        <select id="YearOfStudy" name="YearOfStudy" class="select2" data-placeholder="Click to Choose...">
-                                            <option value="">&nbsp;</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
+                                        <div class="clearfix">
+                                            @Html.EnumDropDownListFor(
+                                                 x => x.YearOfStudy,
+                                                
+                                                 new { @class = "select2", @data_placeholder = "Click to Choose..." })
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.YearOfStudy, "", new { @class = "text-danger  " })
                                     </div>
                                 </div>
 
@@ -137,12 +147,14 @@
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="state">Faculty</label>
 
                                     <div class="col-xs-12 col-sm-9">
-                                        <select id="Faculty" name="Faculty" class="select2" data-placeholder="Click to Choose...">
-                                            <option value="">&nbsp;</option>
-                                            <option value="FIST">Faculty of Information Science & Tech</option>
-                                            <option value="COMMERCE">Faculty of commerce</option>
-                                            <option value="LAW">Faculty of Law</option>
-                                        </select>
+                                        <div class="clearfix">
+
+                                            @Html.DropDownListFor(m => m.Faculty,
+                                                                new SelectList(ViewBag.Faculties, "Code", "Description", ""),
+                                                                "Select Faculty",
+                                                                new { @class = "select2", @data_placeholder = "Click to Choose..."})
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Faculty, "", new { @class = "text-danger  " })
                                     </div>
                                 </div>
 
@@ -157,9 +169,10 @@
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">Password:</label>
 
                                     <div class="col-xs-12 col-sm-9">
-                                        <div class="clearfix">
-                                            <input type="password" name="Password" id="Password" class="col-xs-12 col-sm-4" />
+                                        <div class="clearfix">                                            
+                                            @Html.PasswordFor(m => m.Password, new { @class = "col-xs-12 col-sm-4" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -170,15 +183,17 @@
 
                                     <div class="col-xs-12 col-sm-9">
                                         <div class="clearfix">
-                                            <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="col-xs-12 col-sm-4" />
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "col-xs-12 col-sm-4" })
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="hr hr-dotted"></div>
 
                                 <div class="space-8"></div>
-                            </form>
+
+                            }
                         </div>
                     </div>
 

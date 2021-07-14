@@ -808,7 +808,7 @@ jQuery(function ($) {
 			},
 			Phone: {
 				required: true,
-				phone: 'required'
+				Phone: 'required'
 			},
 			FirstName: {
 				required: true
@@ -879,7 +879,7 @@ jQuery(function ($) {
 
 		if ($('#studentform').valid()) {
 			//Serialize the form datas.  
-			var valdata = $("#electralcandidateform").serialize();
+			var valdata = $("#studentform").serialize();
 			//to get alert popup  	
 
 			jQuery.ajax({
