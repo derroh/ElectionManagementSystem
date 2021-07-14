@@ -209,17 +209,17 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                                 CandidateName = GetCandidateName(candidate.StudentId), //change this, add Foreign key rshps
                                 CandidateStudentId = candidate.StudentId,
                                 ElectralPositionId = candidate.PositionId
-                            });
-
-                            pob.Add(new Models.PositionsOnBallot
-                            {
-                                Candidates = candi.ToArray(),
-                                PositionId = item.PositionId,
-                                PositionSequence = item.Sequence,
-                                PositionName = item.Name
-                            });
+                            });                          
                         }
                     }
+
+                    pob.Add(new Models.PositionsOnBallot
+                    {
+                        Candidates = candi.ToArray(),
+                        PositionId = item.PositionId,
+                        PositionSequence = item.Sequence,
+                        PositionName = item.Name
+                    });
                 }
             }
 

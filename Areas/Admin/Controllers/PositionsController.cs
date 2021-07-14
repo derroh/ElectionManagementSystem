@@ -18,8 +18,14 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
         //[Authorize]
         public ActionResult Index()
         {
+            List<ElectionPositionListViewModel> _ElectionPositionListViewModel = new List<ElectionPositionListViewModel>();
             var positions = _db.ElectionPositions.Take(10).OrderBy(ep => ep.Sequence).ToList();
-            return View(positions);
+            foreach(var position in positions)
+            {
+                _ElectionPositionListViewModel.Add(new ElectionPositionListViewModel { ElectionId = position.ElectionId, PositionId = position.PositionId, Name = position.Name, Sequence = AppFunctions.AddOrdinal(position.Sequence)});
+            }
+            
+            return View(_ElectionPositionListViewModel);
         }        
         public ActionResult Create(ElectionPositionViewModel ep)
         {

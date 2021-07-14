@@ -29,8 +29,9 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             if(election != null)
             {
                 int items = _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList().Count;
-             
-                foreach (var item in _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList())
+                var electionPositions = _db.ElectionPositions.Where(ep => ep.ElectionId == election.ElectionId).ToList();
+
+                foreach (var item in electionPositions)
                 {
                     foreach (var candidate in _db.ElectionCandidates.Where(e => e.ElectionId == election.ElectionId && e.PositionId == item.PositionId).ToList())
                     {
@@ -44,15 +45,16 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
                                 ElectralPositionId = candidate.PositionId
                             });
 
-                            pob.Add(new Models.PositionsOnBallot
-                            {
-                                Candidates = candi.ToArray(),
-                                PositionId = item.PositionId,
-                                PositionSequence = item.Sequence,
-                                PositionName = item.Name
-                            });
-                        }                      
-                    }                                 
+                        }                       
+                    }
+
+                    pob.Add(new Models.PositionsOnBallot
+                    {
+                        Candidates = candi.ToArray(),
+                        PositionId = item.PositionId,
+                        PositionSequence = item.Sequence,
+                        PositionName = item.Name
+                    });
                 }
             }   
 
@@ -133,7 +135,7 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
                 string phone = students.Phone;
 
-                AppFunctions.SendTextMessage(phone, msg);
+              //  AppFunctions.SendTextMessage(phone, msg);
             }
             catch (Exception es)
             {

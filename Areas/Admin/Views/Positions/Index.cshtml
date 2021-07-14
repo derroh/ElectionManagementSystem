@@ -15,6 +15,7 @@
                             <th class="center">
                                 Position Id
                             </th>
+                            <th>Election</th>
                             <th>Position Name</th>
                             <th>Sequence on Ballot</th>
 
@@ -26,69 +27,73 @@
 
                         @foreach (var position in Model)
                         {
-                            <tr>
-                                <td class="center">
-                                    @position.PositionId
-                                </td>
+                        <tr>
+                            <td class="center">
+                                @position.PositionId
+                            </td>
 
-                                <td>
-                                    @position.Name
-                                </td>
-                                <td>
-                                    @position.Sequence
-                                </td>
+                            <td class="center">
+                                @position.ElectionId
+                            </td>
+
+                            <td>
+                                @position.Name
+                            </td>
+                            <td>
+                                @position.Sequence
+                            </td>
 
 
-                                <td>
-                                    <div class="hidden-sm hidden-xs btn-group">
-                                        <a href="@Url.Action("ViewPosition", "Positions", new { id = position.PositionId })" class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
-                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                        </a>
+                            <td>
+                                <div class="hidden-sm hidden-xs btn-group">
+                                    <a href="@Url.Action("ViewPosition", "Positions", new { id = position.PositionId })" class="btn btn-xs btn-info tooltip-info" data-rel="tooltip" title="View">
+                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                    </a>
 
-                                        <a href="@Url.Action("Edit", "Positions", new { id = position.PositionId })" class="btn btn-xs btn-success tooltip-success" data-rel="tooltip" title="Edit">
-                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                        </a>
+                                    <a href="@Url.Action("Edit", "Positions", new { id = position.PositionId })" class="btn btn-xs btn-success tooltip-success" data-rel="tooltip" title="Edit">
+                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                    </a>
 
-                                        <a class="btn btn-xs btn-danger tooltip-error deleteposition" data-docno="@position.PositionId" data-recordname="@position.Name" data-rel="tooltip" title="Delete">
-                                            <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
-                                        </a>
+                                    <a class="btn btn-xs btn-danger tooltip-error deleteposition" data-docno="@position.PositionId" data-recordname="@position.Name" data-rel="tooltip" title="Delete">
+                                        <i class="ace-icon fa fa-trash-o bigger-120 delete"></i>
+                                    </a>
+                                </div>
+
+                                <div class="hidden-md hidden-lg">
+                                    <div class="inline pos-rel">
+                                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                            <li>
+                                                <a href="@Url.Action("ViewPosition", "Positions", new { id = position.PositionId })" class="tooltip-info" data-rel="tooltip" title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Edit", "Positions", new { id = position.PositionId })" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <span class="green">
+                                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#" class="tooltip-error deleteposition" data-docno="@position.PositionId" data-recordname="@position.Name" data-rel="tooltip" title="Delete">
+                                                    <span class="red">
+                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-
-                                    <div class="hidden-md hidden-lg">
-                                        <div class="inline pos-rel">
-                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                                            </button>
-
-                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
-                                                    <a href="@Url.Action("ViewPosition", "Positions", new { id = position.PositionId })" class="tooltip-info" data-rel="tooltip" title="View">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="@Url.Action("Edit", "Positions", new { id = position.PositionId })" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                                        <span class="green">
-                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" class="tooltip-error deleteposition" data-docno="@position.PositionId" data-recordname="@position.Name" data-rel="tooltip" title="Delete">
-                                                        <span class="red">
-                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         }
 
                     </tbody>

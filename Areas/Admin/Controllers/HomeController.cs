@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -46,6 +47,29 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
 
             // Info.
             return Redirect("~/");
+        }
+        public JsonResult GetChartData(string ElectionPosition)
+        {
+            List<Models.Chartdata> positionlist = new List<Models.Chartdata>();
+
+            using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
+            {
+                var positions = dbEntities.ElectionPositions.ToList();
+
+                foreach (var position in positions)
+                {
+                    var random = new Random();
+                    var color = String.Format("#{0:X6}", random.Next(0x1000000));
+
+                    positionlist.Add(new Models.Chartdata
+                    {
+                        label = position.Name,
+                        color = color,
+                        data = 10
+                    });
+                }
+            }
+            return Json(JsonConvert.SerializeObject(positionlist), JsonRequestBehavior.AllowGet);
         }
     }
 }

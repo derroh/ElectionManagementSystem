@@ -5,56 +5,125 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutView.cshtml";
 }
 
-<div class="alert alert-block alert-success">
-    <button type="button" class="close" data-dismiss="alert">
-        <i class="ace-icon fa fa-times"></i>
-    </button>
 
-    <i class="ace-icon fa fa-check green"></i>
-
-    Welcome to Bettie's Voting System Application
-</div>
 
 <div class="row">
     <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card-counter primary">
-                        <i class="fa fa-code-fork"></i>
-                        <span class="count-numbers">@Model.Positions</span>
-                        <span class="count-name">Positions</span>
-                    </div>
-                </div>
 
-                <div class="col-md-3">
-                    <div class="card-counter danger">
-                        <i class="fa fa-ticket"></i>
-                        <span class="count-numbers">@Model.Candidates</span>
-                        <span class="count-name">Candidates</span>
-                    </div>
-                </div>
+        <div class="alert alert-block alert-success">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
 
-                <div class="col-md-3">
-                    <div class="card-counter success">
-                        <i class="fa fa-database"></i>
-                        <span class="count-numbers">@Model.RegisteredVoters</span>
-                        <span class="count-name">Registered Voters</span>
-                    </div>
-                </div>
+            <i class="ace-icon fa fa-check green"></i>
 
-                <div class="col-md-3">
-                    <div class="card-counter info">
-                        <i class="fa fa-users"></i>
-                        <span class="count-numbers">@Model.VotesCast</span>
-                        <span class="count-name">Votes Cast</span>
+            Welcome to Bettie's Voting System Application
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card-counter primary">
+                                <i class="fa fa-code-fork"></i>
+                                <span class="count-numbers">@Model.Positions</span>
+                                <span class="count-name">Positions</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card-counter danger">
+                                <i class="fa fa-ticket"></i>
+                                <span class="count-numbers">@Model.Candidates</span>
+                                <span class="count-name">Candidates</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card-counter success">
+                                <i class="fa fa-database"></i>
+                                <span class="count-numbers">@Model.RegisteredVoters</span>
+                                <span class="count-name">Registered Voters</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card-counter info">
+                                <i class="fa fa-users"></i>
+                                <span class="count-numbers">@Model.VotesCast</span>
+                                <span class="count-name">Votes Cast</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
+        @*chart*@
 
+        <div class="row">
 
+            <div class="col-sm-12">
+                <div class="widget-box">
+                    <div class="widget-header widget-header-flat widget-header-small">
+                        <h5 class="widget-title">
+                            <i class="ace-icon fa fa-signal"></i>
+                            Election Positions
+                        </h5>
+
+                        <div class="widget-toolbar no-border">
+                            <div class="inline dropdown-hover">
+                                <select id="Faculty" name="Faculty" class="select2" data-placeholder="Click to Choose...">
+                                    <option value="">&nbsp;</option>
+                                    <option value="FIST">Faculty of Information Science & Tech</option>
+                                    <option value="COMMERCE">Faculty of commerce</option>
+                                    <option value="LAW">Faculty of Law</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div id="piechart-placeholder"></div>
+
+                            <div class="hr hr8 hr-double"></div>
+
+                            <div class="clearfix">
+                                <div class="grid3">
+                                    <span class="grey">
+                                        <i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
+                                        &nbsp; likes
+                                    </span>
+                                    <h4 class="bigger pull-right">1,255</h4>
+                                </div>
+
+                                <div class="grid3">
+                                    <span class="grey">
+                                        <i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
+                                        &nbsp; tweets
+                                    </span>
+                                    <h4 class="bigger pull-right">941</h4>
+                                </div>
+
+                                <div class="grid3">
+                                    <span class="grey">
+                                        <i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
+                                        &nbsp; pins
+                                    </span>
+                                    <h4 class="bigger pull-right">1,050</h4>
+                                </div>
+                            </div>
+                        </div><!-- /.widget-main -->
+                    </div><!-- /.widget-body -->
+                </div><!-- /.widget-box -->
+            </div><!-- /.col -->
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
