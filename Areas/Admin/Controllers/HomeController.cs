@@ -48,24 +48,28 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             // Info.
             return Redirect("~/");
         }
+
         public JsonResult GetChartData(string ElectionPosition)
         {
             List<Models.Chartdata> positionlist = new List<Models.Chartdata>();
 
+            var random = new Random();
+
             using (ElectionManagementSystemEntities dbEntities = new ElectionManagementSystemEntities())
             {
-                var positions = dbEntities.ElectionPositions.ToList();
+                var positions = dbEntities.Ballots.GroupBy(p => p.PositionId).Select(p => new { p.Key, DistinctCount = p.Select( x => x.CandidateId).Distinct().Count()});
+
 
                 foreach (var position in positions)
                 {
-                    var random = new Random();
+                   
                     var color = String.Format("#{0:X6}", random.Next(0x1000000));
 
                     positionlist.Add(new Models.Chartdata
                     {
-                        label = position.Name,
+                        label = position.Key,
                         color = color,
-                        data = 10
+                        data = position.DistinctCount
                     });
                 }
             }
