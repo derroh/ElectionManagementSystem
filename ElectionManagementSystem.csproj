@@ -506,6 +506,7 @@
     </Content>
     <Content Include="Areas\Admin\Views\Vote\ReportEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Topbar.cshtml" />
+    <Content Include="Areas\Student\Views\Shared\_Topbar.cshtml" />
     <None Include="ElectionManagementDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ElectionManagementDataSet.Designer.cs</LastGenOutput>
