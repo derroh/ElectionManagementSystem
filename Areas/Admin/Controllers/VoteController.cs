@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Reporting.WebForms;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace ElectionManagementSystem.Areas.Admin.Controllers
 {
@@ -150,6 +152,38 @@ namespace ElectionManagementSystem.Areas.Admin.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
+
+        //report
+   
+        public ActionResult ReportEmployee()
+        {
+            try
+            {
+                ReportViewer reportViewer = new ReportViewer();
+                //C:\Users\Derrick\Documents\Visual Studio 2019\Projects\C#\ASP.NET\ElectionManagementSystem\Areas\Admin\Reports\VotesCasted.rdlc
+                reportViewer.ProcessingMode = ProcessingMode.Local;
+                reportViewer.SizeToReportContent = true;
+                //reportViewer.Width = Unit.Percentage(900);
+                //reportViewer.Height = Unit.Percentage(900);
+
+                reportViewer.LocalReport.ReportPath = Server.MapPath("\\Reports\\VotesCasted.rdlc");
+                ElectionManagementSystemEntities entities = new ElectionManagementSystemEntities();
+                ReportDataSource datasource = new ReportDataSource("Students", (from students in entities.Students.Take(10)
+                                                                                select students));
+                reportViewer.LocalReport.DataSources.Clear();
+                reportViewer.LocalReport.DataSources.Add(datasource);
+
+
+                ViewBag.ReportViewer = reportViewer;
+            }
+            catch (Exception es)
+            {
+                es.ToString();
+            }
+
+
+            return View();
         }
 
         private string GetCandidateName(string studentId)

@@ -1,0 +1,146 @@
+﻿
+<ul class="nav nav-list">
+    <li class="hover">
+        <a href="@Html.IsActive("Home", "Index")">
+            <i class="menu-icon fa fa-tachometer"></i>
+            <span class="menu-text"> Dashboard </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+
+    <li class="hover">
+        <a href="@Url.Action("Index", "Vote")">
+            <i class="menu-icon fa fa-pencil-square-o"></i>
+            <span class="menu-text"> Vote </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+
+    <li class="hover">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text"> Students </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+
+        <ul class="submenu">
+            <li class="hover">
+                <a href="@Url.Action("Create", "Students")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Add Student
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="@Url.Action("Index", "Students")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    View Student
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul>
+    </li>
+
+    <li class="hover">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-list-alt"></i>
+            <span class="menu-text"> Elections </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+
+        <ul class="submenu">
+            <li class="hover">
+                <a href="@Url.Action("Create", "Elections")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Simple &amp; Dynamic
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="@Url.Action("Index", "Elections")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    jqGrid plugin
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul>
+    </li>
+
+    <li class="hover">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-cogs"></i>
+            <span class="menu-text"> Position </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+
+        <ul class="submenu">
+            <li class="hover">
+                <a href="@Url.Action("Create", "Positions")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Create Position
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="@Url.Action("Index", "Positions")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    View Positions
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul>
+    </li>
+
+    <li class="hover">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-book"></i>
+            <span class="menu-text"> Candidates </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+
+        <ul class="submenu">
+            <li class="hover">
+                <a href="@Url.Action("Create", "Candidates")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Add candidate
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="@Url.Action("Index", "Candidates")">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    View candidates
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul>
+    </li>
+
+   
+</ul><!-- /.nav-list -->

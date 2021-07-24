@@ -238,6 +238,11 @@
     <Compile Include="ElectionCandidate.cs">
       <DependentUpon>ElectionManagementSystemModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ElectionManagementDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElectionManagementDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ElectionManagementSystemModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -496,6 +501,19 @@
     <Content Include="Areas\Admin\Views\Elections\Design.cshtml" />
     <Content Include="Areas\Admin\Views\Students\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Students\ViewStudent.cshtml" />
+    <Content Include="ElectionManagementDataSet.xsc">
+      <DependentUpon>ElectionManagementDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Vote\ReportEmployee.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Topbar.cshtml" />
+    <None Include="ElectionManagementDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ElectionManagementDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ElectionManagementDataSet.xss">
+      <DependentUpon>ElectionManagementDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -559,6 +577,9 @@
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Views\Profile\" />
     <Folder Include="Areas\Student\Views\Vote\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Reports\VotesCasted.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
