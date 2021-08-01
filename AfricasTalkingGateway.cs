@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 //Note add System.Web.Script.Serialization, using System.Net.Http, Newtonsoft.Json, sytem.Net.Http.Formatting extension reference to the sln
+/// <summary>
+/// Africast Talking SMS Gateway
+/// </summary>
 public class AfricasTalkingGatewayException : Exception
 {
     public AfricasTalkingGatewayException(string message)
